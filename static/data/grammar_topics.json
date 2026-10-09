@@ -1,0 +1,148 @@
+{
+  "groups": [
+    { "id": "focus", "title": "B1.2 focus" },
+    { "id": "review", "title": "Review A2–B1.1" }
+  ],
+  "topics": [
+    {
+      "id": "k2_present",
+      "group": "focus",
+      "title": "Konjunktiv II – Gegenwart",
+      "summary": "würde + Infinitiv, wäre, hätte, könnte, müsste, sollte, dürfte",
+      "description": "Konjunktiv II present: würde + infinitive and the common one-word forms (wäre, hätte, könnte, müsste, sollte, dürfte, wüsste, käme, gäbe). Uses: unreal conditions (Wenn ich Zeit hätte, würde ich ...), wishes (Ich wäre gern ...), polite requests (Könnten Sie ...?), advice (Du solltest ...)."
+    },
+    {
+      "id": "k2_past",
+      "group": "focus",
+      "title": "Konjunktiv II – Vergangenheit",
+      "summary": "hätte/wäre + Partizip II, hätte … machen müssen",
+      "description": "Konjunktiv II past: hätte/wäre + Partizip II for unreal past situations and regrets (Wenn ich früher gekommen wäre, hätte ich ihn gesehen). With modal verbs: hätte + infinitive + modal infinitive (Ich hätte mehr lernen sollen; Du hättest anrufen können)."
+    },
+    {
+      "id": "irreal_als_ob",
+      "group": "focus",
+      "title": "Irreale Wünsche & als ob",
+      "summary": "Wenn ich doch nur …, Er tut so, als ob …",
+      "description": "Unreal wishes with Konjunktiv II (Wenn ich doch nur mehr Zeit hätte! Hätte ich doch nur ...!) and unreal comparisons with als ob / als wenn + Konjunktiv II, verb at the end (Er tut so, als ob er alles wüsste)."
+    },
+    {
+      "id": "passive_basic",
+      "group": "focus",
+      "title": "Passiv – Präsens & Präteritum",
+      "summary": "wird/wurde + Partizip II, von + Dativ",
+      "description": "Vorgangspassiv in present and simple past: werden/wurde + Partizip II, agent with von + Dativ (or durch). Converting active sentences to passive (Der Brief wird geschrieben; Das Haus wurde 1990 gebaut). Impersonal passive (Hier wird viel gearbeitet)."
+    },
+    {
+      "id": "passive_advanced",
+      "group": "focus",
+      "title": "Passiv – Perfekt & mit Modalverben",
+      "summary": "ist … worden, muss … werden",
+      "description": "Passive Perfekt and Plusquamperfekt with 'worden' (Das Paket ist geliefert worden; war repariert worden) and passive with modal verbs (Die Rechnung muss bezahlt werden; Das konnte nicht gemacht werden), including in subordinate clauses (..., weil es repariert werden muss)."
+    },
+    {
+      "id": "relative_clauses",
+      "group": "focus",
+      "title": "Relativsätze",
+      "summary": "der/den/dem/dessen…, mit Präposition, wo/was",
+      "description": "Relative clauses with relative pronouns in Nominativ, Akkusativ, Dativ and Genitiv (der, den, dem, dessen, deren, denen), with prepositions (der Freund, mit dem ich ...), and with wo (place), was (after alles, etwas, nichts, das) and wer. Verb at the end."
+    },
+    {
+      "id": "genitive",
+      "group": "focus",
+      "title": "Genitiv & Präpositionen mit Genitiv",
+      "summary": "des Mannes, wegen, trotz, während, innerhalb",
+      "description": "Genitive articles and noun endings (des Mannes, der Frau, des Kindes), adjective endings in the genitive, and genitive prepositions: wegen, trotz, während, innerhalb, außerhalb, statt/anstatt, aufgrund."
+    },
+    {
+      "id": "n_declension",
+      "group": "focus",
+      "title": "n-Deklination",
+      "summary": "der Kollege → den/dem/des Kollegen",
+      "description": "Weak masculine nouns that add -n/-en in all cases except nominative singular: der Kollege, der Kunde, der Nachbar, der Mensch, der Student, der Junge, der Herr (Herrn), der Name (des Namens), der Praktikant, der Polizist, der Experte."
+    },
+    {
+      "id": "two_part_connectors",
+      "group": "focus",
+      "title": "Zweiteilige Konnektoren",
+      "summary": "sowohl … als auch, weder … noch, je … desto",
+      "description": "Two-part connectors: sowohl ... als auch, weder ... noch, entweder ... oder, nicht nur ... sondern auch, zwar ... aber, je + comparative ... desto/umso + comparative (with correct word order: Je länger ich hier wohne, desto besser gefällt es mir)."
+    },
+    {
+      "id": "infinitive_clauses",
+      "group": "focus",
+      "title": "Infinitivsätze & Finalsätze",
+      "summary": "zu + Inf., um … zu / damit, ohne … zu, statt … zu",
+      "description": "Infinitive clauses with zu (Ich habe vergessen, dich anzurufen; separable verbs: anzurufen), um ... zu vs. damit (same vs. different subject), ohne ... zu / ohne dass, statt ... zu / statt dass."
+    },
+    {
+      "id": "temporal_clauses",
+      "group": "focus",
+      "title": "Temporale Nebensätze & Plusquamperfekt",
+      "summary": "nachdem, bevor, während, seit, bis, sobald, als/wenn",
+      "description": "Temporal subordinate clauses: nachdem (with Plusquamperfekt: Nachdem ich gegessen hatte, ...), bevor, während, seit/seitdem, bis, sobald, als (one-time past) vs. wenn (repeated / present / future). Plusquamperfekt forms: hatte/war + Partizip II. Verb at the end; main clause starts with the verb when the subordinate clause comes first."
+    },
+    {
+      "id": "future",
+      "group": "focus",
+      "title": "Futur I",
+      "summary": "werden + Infinitiv: Plan, Vermutung, Versprechen",
+      "description": "Futur I with werden + infinitive for plans, promises and assumptions (Er wird wohl krank sein), including in subordinate clauses (..., dass ich morgen kommen werde) and with modal verbs (Ich werde arbeiten müssen)."
+    },
+    {
+      "id": "participle_adjectives",
+      "group": "focus",
+      "title": "Partizip I & II als Adjektiv",
+      "summary": "das lachende Kind, die reparierte Maschine",
+      "description": "Partizip I (infinitive + d: lachend, fahrend) and Partizip II used as adjectives before nouns, with correct adjective endings (das weinende Kind, der gestohlene Laptop, mit frisch gekochtem Kaffee)."
+    },
+    {
+      "id": "verbs_prepositions",
+      "group": "focus",
+      "title": "Verben mit Präpositionen & da-/wo-",
+      "summary": "sich freuen auf/über, darauf, worauf",
+      "description": "Verbs with fixed prepositions and their case (sich freuen auf + Akk / über + Akk, warten auf, sich kümmern um, teilnehmen an + Dat, Angst haben vor + Dat, sich erinnern an + Akk, sich beschweren über, abhängen von), plus da-compounds (darauf, darüber, damit) and wo-compounds in questions (Worauf wartest du? Auf wen wartest du? for people)."
+    },
+    {
+      "id": "lassen",
+      "group": "focus",
+      "title": "lassen",
+      "summary": "Ich lasse mein Auto reparieren",
+      "description": "lassen + infinitive: having something done (Ich lasse mir die Haare schneiden), allowing (Lass mich gehen), leaving something (Ich habe die Jacke zu Hause gelassen), and Perfekt with double infinitive (Ich habe das Auto reparieren lassen)."
+    },
+    {
+      "id": "perfekt_review",
+      "group": "review",
+      "title": "Perfekt (haben/sein)",
+      "summary": "Partizip II, haben oder sein",
+      "description": "Perfekt with haben or sein (movement and change of state with sein), regular, irregular, separable and inseparable Partizip II forms (angerufen, verstanden, studiert)."
+    },
+    {
+      "id": "praeteritum",
+      "group": "review",
+      "title": "Präteritum",
+      "summary": "ging, kam, musste, war, hatte",
+      "description": "Präteritum of regular verbs, common irregular verbs (gehen, kommen, sehen, geben, nehmen, finden, bleiben, sprechen, stehen, wissen) and modal verbs, with correct person endings (ich ging, du gingst, wir gingen)."
+    },
+    {
+      "id": "adjective_endings",
+      "group": "review",
+      "title": "Adjektivendungen",
+      "summary": "der/ein/– + Adjektiv in allen Fällen",
+      "description": "Adjective declension after definite articles, indefinite articles / possessives / kein, and with no article, in Nominativ, Akkusativ and Dativ (der neue Kollege, mit einem alten Freund, frisches Brot)."
+    },
+    {
+      "id": "two_way_prepositions",
+      "group": "review",
+      "title": "Wechselpräpositionen",
+      "summary": "in, an, auf … + Akk (wohin) / Dat (wo)",
+      "description": "Two-way prepositions (in, an, auf, über, unter, vor, hinter, neben, zwischen) with Akkusativ for direction (wohin) and Dativ for location (wo), plus legen/liegen, stellen/stehen, hängen, setzen/sitzen."
+    },
+    {
+      "id": "subordinate_word_order",
+      "group": "review",
+      "title": "Nebensätze & Wortstellung",
+      "summary": "weil, dass, ob, wenn, obwohl – Verb am Ende",
+      "description": "Word order in subordinate clauses (weil, dass, ob, wenn, obwohl, indirect questions with W-words): conjugated verb at the end, separable verbs rejoined (..., weil ich früh aufstehe), and verb-first main clause after a fronted subordinate clause."
+    }
+  ]
+}

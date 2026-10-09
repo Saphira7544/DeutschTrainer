@@ -1,0 +1,73 @@
+// Run with: node --test tests/js
+import assert from "node:assert/strict";
+import { test } from "node:test";
+
+import { guessColumns, parseVocabFile } from "../../static/js/lib/anki.js";
+import { computeStreak } from "../../static/js/lib/days.js";
+import { checkAnswer, checkVocab, mainForm, stripMarkup, wordDiff } from "../../static/js/lib/text.js";
+
+test("checkAnswer accepts exact and loosely-spelled answers", () => {
+  assert.equal(checkAnswer("würde", ["würde"]).status, "correct");
+  assert.equal(checkAnswer("  würde. ", ["würde"]).status, "correct");
+  const swiss = checkAnswer("Strasse", ["Straße"]);
+  assert.equal(swiss.status, "correct");
+  assert.match(swiss.note, /Straße/);
+  assert.equal(checkAnswer("wuerde", ["würde"]).status, "correct");
+  assert.equal(checkAnswer("wurde", ["würde"]).status, "wrong");
+  assert.equal(checkAnswer("", ["würde"]).status, "wrong");
+});
+
+test("mainForm strips Goethe list grammar info", () => {
+  assert.equal(mainForm("der Bahnhof, -¨e"), "der Bahnhof");
+  assert.equal(mainForm("abfahren, fährt ab, fuhr ab, ist abgefahren"), "abfahren");
+  assert.equal(mainForm("die Ahnung (keine Ahnung haben)"), "die Ahnung");
+});
+
+test("checkVocab handles articles", () => {
+  assert.equal(checkVocab("der Bahnhof", "der Bahnhof, -¨e").status, "correct");
+  assert.equal(checkVocab("Der bahnhof", "der Bahnhof").status, "correct");
+  assert.equal(checkVocab("Bahnhof", "der Bahnhof").status, "article");
+  assert.equal(checkVocab("die Bahnhof", "der Bahnhof").status, "article");
+  assert.equal(checkVocab("Bahn", "der Bahnhof").status, "wrong");
+  assert.equal(checkVocab("abfahren", "abfahren, fährt ab").status, "correct");
+  assert.equal(checkVocab("Mama", "die Mutter / die Mama").status, "article");
+});
+
+test("stripMarkup removes Anki html and sounds", () => {
+  assert.equal(stripMarkup("<b>der</b> Hund&nbsp;[sound:hund.mp3]"), "der Hund");
+  assert.equal(stripMarkup("eins<br>zwei"), "eins zwei");
+});
+
+test("parseVocabFile reads Anki plain-text exports", () => {
+  const text = '#separator:tab\n#html:true\n#columns:Deutsch\tEnglisch\nder Hund\tdog\n"die Straße, -n"\t"street, road"\n\n';
+  const { columns, rows } = parseVocabFile(text);
+  assert.deepEqual(columns, ["Deutsch", "Englisch"]);
+  assert.deepEqual(rows, [["der Hund", "dog"], ["die Straße, -n", "street, road"]]);
+});
+
+test("parseVocabFile guesses the separator and handles quoted newlines", () => {
+  const { rows } = parseVocabFile('hund;"dog\nanimal"\r\nkatze;cat');
+  assert.deepEqual(rows, [["hund", "dog animal"], ["katze", "cat"]]);
+});
+
+test("guessColumns finds the German column", () => {
+  const rows = [["dog", "der Hund"], ["to go", "gehen"], ["street", "die Straße"]];
+  assert.deepEqual(guessColumns(rows), { de: 1, en: 0 });
+});
+
+test("streak counts consecutive goal days, today optional", () => {
+  const today = new Date(2026, 9, 10);
+  const xp = { "2026-10-07": 40, "2026-10-08": 30, "2026-10-09": 31 };
+  assert.deepEqual(computeStreak(xp, 30, today), { streak: 3, todayDone: false });
+  assert.deepEqual(computeStreak({ ...xp, "2026-10-10": 30 }, 30, today), { streak: 4, todayDone: true });
+  assert.deepEqual(computeStreak({ ...xp, "2026-10-08": 10 }, 30, today), { streak: 1, todayDone: false });
+  assert.deepEqual(computeStreak({}, 30, today), { streak: 0, todayDone: false });
+});
+
+test("wordDiff marks removed and added words", () => {
+  const diff = wordDiff("Ich habe gestern nach Bern gegangen", "Ich bin gestern nach Bern gegangen.");
+  assert.deepEqual(
+    diff.map((d) => `${d.type}:${d.text}`),
+    ["same:Ich", "del:habe", "add:bin", "same:gestern", "same:nach", "same:Bern", "same:gegangen."],
+  );
+});
