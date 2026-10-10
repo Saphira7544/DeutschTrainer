@@ -1,6 +1,7 @@
 // Boot, hash router and the bottom navigation.
 import { requestPersistence } from "./db.js";
-import { streakInfo } from "./store.js";
+import { registerBackgroundCheck } from "./reminders.js";
+import { getSettings, streakInfo } from "./store.js";
 import { h, mount } from "./ui.js";
 
 const routes = [
@@ -73,5 +74,7 @@ refreshStreak();
 requestPersistence();
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/sw.js").catch((err) => console.warn("Service worker not registered", err));
+  navigator.serviceWorker.register("/sw.js", { type: "module" }).catch((err) => console.warn("Service worker not registered", err));
+  // Re-ask for background checks on every start: Chrome only grants them to installed, regularly used apps.
+  getSettings().then((s) => s.notifications && registerBackgroundCheck());
 }

@@ -1,7 +1,10 @@
-// Service worker: lets the app open offline. Network first (so updates show up right away),
-// falling back to the cached copy. API calls are never cached.
+// Service worker (a module): lets the app open offline, and nags you when you haven't practised.
+// Network first (so updates show up right away), falling back to the cached copy. API calls are never cached.
+import { computeStreak, dayKey } from "/js/lib/days.js";
+import { nagFor } from "/js/lib/nag.js";
+
 // Bump the version when the file list changes. The Goethe deck and its audio are cached when first used.
-const CACHE = "deutsch-trainer-v3";
+const CACHE = "deutsch-trainer-v4";
 
 const SHELL = [
   "/",
@@ -17,7 +20,9 @@ const SHELL = [
   "/js/lib/days.js",
   "/js/lib/anki.js",
   "/js/lib/lexicon.js",
+  "/js/lib/nag.js",
   "/js/wordsheet.js",
+  "/js/reminders.js",
   "/js/vendor/ts-fsrs.mjs",
   "/js/views/home.js",
   "/js/views/vocab.js",
@@ -62,5 +67,75 @@ self.addEventListener("fetch", (event) => {
         return res;
       })
       .catch(() => caches.match(event.request, { ignoreSearch: true }).then((hit) => hit ?? caches.match("/index.html"))),
+  );
+});
+
+// ---------------------------------------------------------------- reminders
+
+/** Read a whole object store from the app's IndexedDB (same database the app uses). */
+function readAll(store) {
+  return new Promise((resolve, reject) => {
+    const open = indexedDB.open("deutsch-trainer");
+    open.onerror = () => reject(open.error);
+    open.onsuccess = () => {
+      const db = open.result;
+      if (!db.objectStoreNames.contains(store)) return resolve([]);
+      const req = db.transaction(store).objectStore(store).getAll();
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    };
+  });
+}
+
+function saveSetting(key, value) {
+  return new Promise((resolve, reject) => {
+    const open = indexedDB.open("deutsch-trainer");
+    open.onerror = () => reject(open.error);
+    open.onsuccess = () => {
+      const tx = open.result.transaction("settings", "readwrite");
+      tx.objectStore("settings").put({ key, value });
+      tx.oncomplete = resolve;
+      tx.onerror = () => reject(tx.error);
+    };
+  });
+}
+
+/** Called when Chrome wakes the app in the background: nag only if today's goal isn't reached. */
+async function maybeNag() {
+  const [settingRows, days] = await Promise.all([readAll("settings"), readAll("activity")]);
+  const settings = Object.fromEntries(settingRows.map((r) => [r.key, r.value]));
+  if (!settings.notifications) return;
+  const goal = settings.dailyGoal ?? 30;
+  const xpByDay = Object.fromEntries(days.map((d) => [d.date, d.xp]));
+  const nag = nagFor({
+    times: settings.reminderTimes ?? undefined,
+    xpToday: xpByDay[dayKey()] ?? 0,
+    goal,
+    streak: computeStreak(xpByDay, goal).streak,
+    lastSlotKey: settings.lastNagSlot ?? null,
+  });
+  if (!nag) return;
+  await saveSetting("lastNagSlot", nag.slotKey);
+  await self.registration.showNotification(nag.title, {
+    body: nag.body,
+    icon: "/icons/icon-192.png",
+    badge: "/icons/icon-192.png",
+    tag: "nag",
+    data: { url: "/#/" },
+  });
+}
+
+self.addEventListener("periodicsync", (event) => {
+  if (event.tag === "nag") event.waitUntil(maybeNag());
+});
+
+// Tapping a notification opens the app (or focuses it if it's already open).
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  event.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((wins) => {
+      const win = wins.find((w) => new URL(w.url).origin === location.origin);
+      return win ? win.focus() : self.clients.openWindow(event.notification.data?.url ?? "/");
+    }),
   );
 });

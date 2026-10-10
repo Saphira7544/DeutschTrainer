@@ -10,6 +10,8 @@ export const DEFAULTS = {
   autoSpeak: true,
   grammarLevels: null, // levels used in mixed grammar practice; null = all
   goetheDeckLoaded: false,
+  notifications: false,
+  reminderTimes: null, // null = the defaults in lib/nag.js
 };
 
 // XP per activity. Speaking is worth the most because it's the hardest and most useful.

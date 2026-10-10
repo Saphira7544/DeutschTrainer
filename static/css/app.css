@@ -301,6 +301,9 @@ ul.plain { list-style: none; padding: 0; }
 .w { cursor: pointer; border-radius: 4px; }
 .w:hover { background: var(--surface-2); }
 .w:active { background: var(--accent); color: var(--accent-ink); }
+.times { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.times input { width: auto; margin: 0; }
+.card h4 { margin-top: 16px; }
 .tap-hint { margin: 12px 0 0; font-size: 0.78rem; color: var(--muted); }
 
 .sheet-backdrop {

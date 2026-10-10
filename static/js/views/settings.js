@@ -1,5 +1,6 @@
 import { checkToken } from "../api.js";
 import { exportBackup, getSettings, importBackup, setSetting, wipeAll } from "../store.js";
+import { remindersCard } from "../reminders.js";
 import { h, mount, toast } from "../ui.js";
 
 export async function render(root) {
@@ -56,9 +57,12 @@ export async function render(root) {
     }
   });
 
+  const reminders = await remindersCard();
+
   mount(root,
     h("h1", "More"),
     h("a.tile", { href: "#/notebook" }, h("span.tile-icon", "📒"), h("div", h("h3", "Notebook"), h("p.muted", "Your corrections from speaking"))),
+    reminders,
     h("form.card", { onsubmit: save },
       h("h3", "Settings"),
       h("label", "Access token", token),

@@ -117,3 +117,29 @@ test("tokenize keeps punctuation separate from words", () => {
     ["Wenn", "ich", "hätte", "würde", "ich", "s", "tun"],
   );
 });
+
+import { calendarLink, nagFor } from "../../static/js/lib/nag.js";
+
+test("nagFor only nags after a reminder time, once per slot, and not when the goal is met", () => {
+  const at = (h, m) => new Date(2026, 9, 10, h, m);
+  const base = { times: ["08:30", "13:00", "20:30"], goal: 30, streak: 5, random: () => 0 };
+  assert.equal(nagFor({ ...base, now: at(7, 0), xpToday: 0 }), null); // before the first reminder
+  const morning = nagFor({ ...base, now: at(9, 0), xpToday: 0 });
+  assert.equal(morning.slotKey, "2026-10-10#0");
+  assert.match(morning.title + morning.body, /German|Deutsch|verbs/);
+  assert.equal(nagFor({ ...base, now: at(9, 30), xpToday: 0, lastSlotKey: "2026-10-10#0" }), null); // already nagged
+  const evening = nagFor({ ...base, now: at(21, 0), xpToday: 12, lastSlotKey: "2026-10-10#0" });
+  assert.equal(evening.slotKey, "2026-10-10#2");
+  assert.match(evening.body, /18 XP/);
+  assert.equal(nagFor({ ...base, now: at(21, 0), xpToday: 30 }), null); // goal reached: peace
+  assert.doesNotMatch(nagFor({ ...base, streak: 0, now: at(21, 0) }).title + nagFor({ ...base, streak: 0, now: at(21, 0) }).body, /\{|0-day streak is/);
+});
+
+test("calendarLink builds a daily repeating Google Calendar event", () => {
+  const url = new URL(calendarLink({ time: "20:30", index: 2, total: 3, appUrl: "https://example.org/", timeZone: "Europe/Zurich", now: new Date(2026, 9, 10, 9, 0) }));
+  assert.equal(url.hostname, "calendar.google.com");
+  assert.equal(url.searchParams.get("dates"), "20261010T203000/20261010T204000");
+  assert.equal(url.searchParams.get("recur"), "RRULE:FREQ=DAILY");
+  assert.equal(url.searchParams.get("ctz"), "Europe/Zurich");
+  assert.match(url.searchParams.get("text"), /streak/);
+});
