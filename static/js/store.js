@@ -9,6 +9,7 @@ export const DEFAULTS = {
   vocabDirection: "production", // production (EN→DE) | recognition (DE→EN) | mixed
   autoSpeak: true,
   grammarLevels: null, // levels used in mixed grammar practice; null = all
+  goetheDeckLoaded: false,
 };
 
 // XP per activity. Speaking is worth the most because it's the hardest and most useful.

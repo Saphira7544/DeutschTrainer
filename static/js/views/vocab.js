@@ -1,8 +1,8 @@
 import { db } from "../db.js";
 import { guessColumns, parseVocabFile } from "../lib/anki.js";
 import { checkVocab, mainForm } from "../lib/text.js";
-import { addCards, allCards, buildQueue, grade, previews, Rating, State } from "../srs.js";
-import { addActivity, getSettings, today } from "../store.js";
+import { addCards, allCards, buildQueue, grade, isPriority, previews, Rating, State } from "../srs.js";
+import { addActivity, getSettings, setSetting, today } from "../store.js";
 import { h, loadJSON, mount, say, speakButton, toast } from "../ui.js";
 
 const SESSION_SIZE = 20;
@@ -35,13 +35,15 @@ async function overview(root) {
     }
   }
 
-  const hasDeck = cards.some((c) => c.source === "goethe");
+  // Single words picked from exercises also come from the deck, so check a flag rather than the cards.
+  const hasDeck = settings.goetheDeckLoaded;
   async function loadDeck(e) {
     e.target.disabled = true;
     e.target.textContent = "Loading…";
     try {
       const { words } = await loadJSON("/data/goethe_deck.json");
       const added = await addCards(words.map(({ id, ...w }) => ({ ...w, source: "goethe" })));
+      await setSetting("goetheDeckLoaded", true);
       toast(`Added ${added} words 🎉`);
       overview(root);
     } catch (err) {
@@ -144,6 +146,7 @@ async function review(root) {
 
   function showCard(card, direction) {
     const isNew = card.fsrs.state === State.New;
+    const picked = isPriority(card); // added by you from an exercise: doesn't use up the daily new-word limit
     const total = done + main.length + learning.length + 1;
     const header = h("div.session-head",
       h("a.muted", { href: "#/vocab" }, "✕"),
@@ -151,7 +154,7 @@ async function review(root) {
       h("span.muted", `${done}/${total}`),
     );
     const badges = h("div.badges",
-      isNew && h("span.badge.new", "new"),
+      isNew && h("span.badge.new", picked ? "new · picked by you" : "new"),
       extra && h("span.badge", "extra practice"),
       direction === "production" && /^(der|die|das) /i.test(mainForm(card.de)) && h("span.badge", "noun · der/die/das?"),
     );
@@ -211,7 +214,7 @@ async function review(root) {
     async function rate(r) {
       const updated = await grade(card, r);
       done++;
-      await addActivity("vocab", isNew ? { newCards: 1 } : {});
+      await addActivity("vocab", isNew && !picked ? { newCards: 1 } : {});
       // Forgotten: see it again a few cards later in this session.
       if (r === Rating.Again) learning.push(updated);
       show();

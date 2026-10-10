@@ -125,6 +125,22 @@ def grammar_exercises(body: ExercisesIn):
     return {"exercises": exercises}
 
 
+class LookupIn(BaseModel):
+    word: str = Field(min_length=1, max_length=60)
+    sentence: str = Field(default="", max_length=500)
+
+
+@protected.post("/words/lookup")
+def word_lookup(body: LookupIn):
+    return _ask(
+        prompts.LOOKUP_SYSTEM,
+        prompts.lookup_user(body.word, body.sentence),
+        "word_lookup",
+        prompts.LOOKUP_SCHEMA,
+        max_tokens=800,
+    )
+
+
 class CheckIn(BaseModel):
     exercise: dict
     answer: str = Text

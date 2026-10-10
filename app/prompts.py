@@ -171,6 +171,24 @@ def exercises_user(topic: dict, count: int, recent_mistakes: list[str]) -> str:
     return "\n".join(lines)
 
 
+# ---------------------------------------------------------------- word lookup
+
+LOOKUP_SYSTEM = f"""You are a German-English learner's dictionary. {LEARNER}
+The learner tapped a word in a German sentence. Give its dictionary entry:
+- de: the dictionary form. Nouns with article (der Bahnhof); verbs in the infinitive (with 'sich' if reflexive); adjectives in the base form. Pronouns and articles: the nominative form (ihm → er).
+- plural: the noun's plural without article (Bahnhöfe), or null for other words or nouns without a plural.
+- en: a short English meaning that fits this sentence (max 6 words).
+- example: a short, simple German example sentence (A2-B1) using the word, different from the given sentence."""
+
+LOOKUP_SCHEMA = _object(
+    {"de": {"type": "string"}, "plural": _nullable("string"), "en": {"type": "string"}, "example": {"type": "string"}}
+)
+
+
+def lookup_user(word: str, sentence: str) -> str:
+    return f"Word: {word}\nSentence: {sentence}"
+
+
 # ---------------------------------------------------------------- answer check
 
 CHECK_SYSTEM = f"""You check a German learner's answer to a grammar exercise. {LEARNER}

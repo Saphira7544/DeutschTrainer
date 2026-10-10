@@ -5,6 +5,7 @@ import { db } from "../db.js";
 import { checkAnswer } from "../lib/text.js";
 import { addActivity, getSettings, setSetting } from "../store.js";
 import { h, loadJSON, mount, shuffle, speakButton, spinner, toast } from "../ui.js";
+import { tappable } from "../wordsheet.js";
 
 const SESSION_SIZE = 10;
 const DEFAULT_INSTRUCTION = { choice: "Choose the right answer.", gap: "Fill in the gap." };
@@ -189,11 +190,11 @@ async function practice(root, topicId) {
       h("span.badge", `${topic?.level ?? ""} · ${topic?.title ?? ex.topic_id}`),
       ex.ai && h("span.badge.new", "✨ AI"),
       h("p.instruction", ex.instruction),
-      h("p.exercise-sentence", { lang: "de" }, ex.type === "transform" ? ex.sentence : renderGap(ex.sentence)),
+      h("p.exercise-sentence", { lang: "de" }, ex.type === "transform" ? tappable(ex.sentence) : renderGap(ex.sentence)),
       ex.hint && h("p.hint", ex.hint),
     );
     const answerArea = h("div");
-    body.append(answerArea);
+    body.append(answerArea, h("p.tap-hint", "Tap any word to see what it means"));
     mount(root, header, body);
 
     if (ex.type === "choice") {
@@ -260,7 +261,7 @@ async function practice(root, topicId) {
         h("p.result-title", ok ? "✓ Richtig!" : "✗ Not quite"),
         verdict.note && h("p.muted", verdict.note),
         !ok && h("p.muted.small", { lang: "de" }, "You wrote: ", answer),
-        h("p.full-sentence", { lang: "de" }, full, " ", speakButton(full)),
+        h("p.full-sentence", { lang: "de" }, tappable(full), " ", speakButton(full)),
         ex.answers.length > 1 && h("p.muted.small", { lang: "de" }, "Also correct: ", ex.answers.filter((a) => a !== verdict.expected).join(" · ")),
         h("p.explanation", ex.explanation),
         extra,
@@ -349,5 +350,5 @@ async function practice(root, topicId) {
 
 function renderGap(sentence) {
   const parts = String(sentence).split("___");
-  return parts.flatMap((p, i) => (i ? [h("span.gap", "  "), p] : [p]));
+  return parts.flatMap((p, i) => (i ? [h("span.gap", "  "), tappable(p, sentence)] : [tappable(p, sentence)]));
 }

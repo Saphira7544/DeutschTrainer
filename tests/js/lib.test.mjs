@@ -76,3 +76,44 @@ test("wordDiff marks removed and added words", () => {
     ["same:Ich", "del:habe", "add:bin", "same:gestern", "same:nach", "same:Bern", "same:gegangen."],
   );
 });
+
+import { buildLexicon, tokenize } from "../../static/js/lib/lexicon.js";
+
+const WORDS = [
+  { de: "fahren", en: "to drive", conj: "er fährt, er ist gefahren, er fuhr" },
+  { de: "abfahren", en: "to depart", conj: "er fährt ab, er ist abgefahren, er fuhr ab" },
+  { de: "der Fahrplan", en: "timetable" },
+  { de: "der Kollege", en: "colleague", plural: "Kollegen" },
+  { de: "das Kind", en: "child", plural: "Kinder" },
+  { de: "stehlen", en: "to steal", conj: "er stiehlt, er hat gestohlen, er stahl" },
+  { de: "renovieren", en: "to renovate" },
+  { de: "haben", en: "to have", conj: "er hat, er hat gehabt, er hatte" },
+  { de: "gut", en: "good" },
+  { de: "groß", en: "big" },
+  { de: "anrufen", en: "to call", conj: "er ruft an, er hat angerufen, er rief an" },
+  { de: "allein", en: "alone", conj: "er lässt allein, er hat allein gelassen" },
+  { de: "lassen", en: "to let", conj: "er lässt, er hat gelassen, er ließ" },
+];
+
+test("lexicon finds dictionary forms of inflected words", () => {
+  const lex = buildLexicon(WORDS);
+  const first = (t) => lex.lookup(t)[0]?.de;
+  assert.equal(first("fährt"), "fahren"); // before abfahren
+  assert.equal(first("Kollegen"), "der Kollege");
+  assert.equal(first("Kindern"), "das Kind");
+  assert.equal(first("gestohlenen"), "stehlen");
+  assert.equal(first("renovierten"), "renovieren");
+  assert.equal(first("hätten"), "haben");
+  assert.equal(first("besser"), "gut");
+  assert.equal(first("größten"), "groß");
+  assert.equal(first("anzurufen"), "anrufen");
+  assert.equal(first("lässt"), "lassen"); // the adverb's conjugation note ranks lower
+  assert.deepEqual(lex.lookup("Xylophon"), []);
+});
+
+test("tokenize keeps punctuation separate from words", () => {
+  assert.deepEqual(
+    tokenize("Wenn ich ___ hätte, würde ich's tun.").filter((t) => t.word).map((t) => t.text),
+    ["Wenn", "ich", "hätte", "würde", "ich", "s", "tun"],
+  );
+});

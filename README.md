@@ -6,6 +6,7 @@ A phone-first study app for getting from "I know the rules" to "I can just say i
 
 - **Words**: the Goethe A1–B1 word list (2,859 words with native audio, examples, plurals, conjugations), one tap to add. You can also import other Anki text exports or add words by hand. Reviews use FSRS, the scheduler modern Anki uses. You type the German from the English, because producing words is what makes them stick. Missing or wrong articles count as "almost".
 - **Grammar**: 42 topics from A1.2 to B1.2 with **806 built-in exercises** (multiple choice, fill-in-the-gap, rewrite the sentence). Practice works offline and costs nothing. Unseen exercises come first, then the ones you got wrong. Mixed practice serves more of your weak topics, filtered by the levels you pick. The AI is used only when you ask: *Is mine right too?* for an answer that differs from the key, or *Make 8 new ones* once a topic's bank is used up.
+- **Tap any word** in a grammar exercise to see its meaning from the Goethe list. Inflected forms are recognised (fährt → fahren, Kollegen → der Kollege, hätte → haben). One tap adds it to your words, and it comes **first in your next review**, outside the daily new-word limit. Words not on the list: *🤖 Look it up* (AI) or type the meaning yourself.
 - **Speak**: answer a question out loud (or type). The AI first restates what you meant, shows the minimal correction as a diff, gives a more natural local version, and picks **at most 3** fixes that matter. Then *Say it again*. Fixes go to the **Notebook** and steer your grammar exercises, and new words can become cards with one tap.
 - **Streak** with a daily XP goal (1 per card, 2 per exercise, 5 per spoken answer).
 - Installable on Android as an app (PWA). Words and grammar reviews work offline.
@@ -74,9 +75,11 @@ static/
   js/app.js        router + bottom tabs
   js/views/        one file per screen
   js/srs.js        vocab cards + FSRS scheduling (js/vendor/ts-fsrs.mjs, MIT)
-  js/lib/          pure logic: answer checking, Anki import, streaks (unit-tested)
+  js/lib/          pure logic: answer checking, Anki import, streaks, word lookup (unit-tested)
+  js/wordsheet.js  tap-to-translate panel, reusable on any screen
 tools/
   import_apkg.py   converts the Goethe Anki deck into the app's word list + audio
+  goethe_*_fixes.json  corrections for the deck (missing articles, cards with a verb's meaning on a noun)
 tests/
 ```
 

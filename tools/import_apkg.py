@@ -23,6 +23,7 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT_JSON = ROOT / "static" / "data" / "goethe_deck.json"
 OUT_AUDIO = ROOT / "static" / "audio" / "goethe"
 ARTICLE_FIXES = Path(__file__).with_name("goethe_article_fixes.json")
+NOUN_FIXES = Path(__file__).with_name("goethe_noun_fixes.json")
 
 LABELS = ("Conj", "Case", "Related", "Info")
 
@@ -96,7 +97,8 @@ def parse_note(front: str, back: str) -> dict | None:
     sound = re.search(r"\[sound:([^\]]+)\]", back)
     # A few cards lost the German word: the back starts with English. The audio file is named after the word.
     stem = sound.group(1).rsplit(".", 1)[0].replace("_", " ").strip() if sound else ""
-    if stem and letters(stem) not in letters(b[0]):
+    recovered = bool(stem) and letters(stem) not in letters(b[0])
+    if recovered:
         extra = b[0]
         de, plural = stem, ""
         en_note = "; ".join(x for x in (en_note, f"also: {extra}") if x)
@@ -107,6 +109,10 @@ def parse_note(front: str, back: str) -> dict | None:
             note[m.group(1).lower()] = m.group(2)
         elif not note["example"]:
             note["example"] = seg
+    if recovered:
+        # The rest of these cards is shifted too: the "German" example is the English one.
+        note["exampleEn"] = note["exampleEn"] or note["example"]
+        note["example"] = ""
     sound = re.search(r"\[sound:([^\]]+)\]", back)
     note["sound"] = sound.group(1) if sound else None
     return note
@@ -117,8 +123,40 @@ def safe_member(name: str) -> bool:
     return name in ("collection.anki21", "collection.anki2", "media") or name.isdigit()
 
 
+def read_notes(con, tmp: Path, fixes: dict, noun_fixes: dict) -> list[dict]:
+    media = json.loads((tmp / "media").read_text(encoding="utf-8"))
+    by_filename = {v: k for k, v in media.items()}
+
+    if OUT_AUDIO.exists():
+        shutil.rmtree(OUT_AUDIO)
+    OUT_AUDIO.mkdir(parents=True)
+
+    words = []
+    for note_id, flds in con.execute("select id, flds from notes order by id"):
+        front, back = flds.split("")[:2]
+        note = parse_note(front, back)
+        if not note:
+            continue
+        note["de"] = fixes.get(note["de"], note["de"])
+        if note["de"] in PLURAL_FIXES or note["de"].endswith("(Pl.)"):
+            note["plural"] = PLURAL_FIXES.get(note["de"], "")
+        note["en"] = EN_FIXES.get(note["de"], note["en"])
+        if note["de"] in noun_fixes:
+            # The deck described a verb on this noun's card: keep only the noun, its plural and audio.
+            note = {"de": note["de"], "plural": note["plural"], "en": noun_fixes[note["de"]], "sound": note["sound"]}
+        sound = note.pop("sound")
+        if sound and sound in by_filename and (tmp / by_filename[sound]).exists():
+            target = OUT_AUDIO / f"{note_id}.mp3"
+            shutil.copyfile(tmp / by_filename[sound], target)
+            note["audio"] = f"/audio/goethe/{target.name}"
+        note["id"] = f"goethe-{note_id}"
+        words.append({k: v for k, v in note.items() if v})
+    return words
+
+
 def main(apkg: Path) -> None:
     fixes = json.loads(ARTICLE_FIXES.read_text(encoding="utf-8")) if ARTICLE_FIXES.exists() else {}
+    noun_fixes = json.loads(NOUN_FIXES.read_text(encoding="utf-8")) if NOUN_FIXES.exists() else {}
     with tempfile.TemporaryDirectory() as tmp, zipfile.ZipFile(apkg) as z:
         tmp = Path(tmp)
         for name in z.namelist():
@@ -128,31 +166,10 @@ def main(apkg: Path) -> None:
         if not db.exists():
             db = tmp / "collection.anki2"
         con = sqlite3.connect(db)
-        media = json.loads((tmp / "media").read_text(encoding="utf-8"))
-        by_filename = {v: k for k, v in media.items()}
-
-        if OUT_AUDIO.exists():
-            shutil.rmtree(OUT_AUDIO)
-        OUT_AUDIO.mkdir(parents=True)
-
-        words = []
-        for note_id, flds in con.execute("select id, flds from notes order by id"):
-            front, back = flds.split("\x1f")[:2]
-            note = parse_note(front, back)
-            if not note:
-                continue
-            note["de"] = fixes.get(note["de"], note["de"])
-            if note["de"] in PLURAL_FIXES or note["de"].endswith("(Pl.)"):
-                note["plural"] = PLURAL_FIXES.get(note["de"], "")
-            note["en"] = EN_FIXES.get(note["de"], note["en"])
-            sound = note.pop("sound")
-            if sound and sound in by_filename and (tmp / by_filename[sound]).exists():
-                target = OUT_AUDIO / f"{note_id}.mp3"
-                shutil.copyfile(tmp / by_filename[sound], target)
-                note["audio"] = f"/audio/goethe/{target.name}"
-            note["id"] = f"goethe-{note_id}"
-            words.append({k: v for k, v in note.items() if v})
-        con.close()
+        try:
+            words = read_notes(con, tmp, fixes, noun_fixes)
+        finally:
+            con.close()  # before the temp folder is deleted (Windows keeps open files locked)
 
     OUT_JSON.write_text(json.dumps({"source": "Goethe A1-B1 Anki deck", "words": words}, ensure_ascii=False), encoding="utf-8")
     with_audio = sum(1 for w in words if "audio" in w)

@@ -150,5 +150,13 @@ def test_schemas_are_strict():
         if schema.get("type") == "array":
             walk(schema["items"])
 
-    for s in (prompts.FEEDBACK_SCHEMA, prompts.EXERCISES_SCHEMA, prompts.CHECK_SCHEMA, prompts.PROMPT_SCHEMA):
+    for s in (prompts.FEEDBACK_SCHEMA, prompts.EXERCISES_SCHEMA, prompts.CHECK_SCHEMA, prompts.PROMPT_SCHEMA, prompts.LOOKUP_SCHEMA):
         walk(s)
+
+
+def test_word_lookup(client, fake_llm):
+    fake_llm.responses["word_lookup"] = {"de": "der Bahnhof", "plural": "Bahnhöfe", "en": "train station", "example": "Der Bahnhof ist groß."}
+    res = client.post("/api/words/lookup", json={"word": "Bahnhofs", "sentence": "In der Nähe des Bahnhofs."}, headers=AUTH)
+    assert res.status_code == 200
+    assert res.json()["de"] == "der Bahnhof"
+    assert "Bahnhofs" in fake_llm.calls[0]["user"]

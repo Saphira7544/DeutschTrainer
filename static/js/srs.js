@@ -15,7 +15,7 @@ function revive(f) {
 // Extra info some sources (the Goethe deck) provide, shown on the back of the card.
 const EXTRA_FIELDS = ["plural", "exampleEn", "enNote", "conj", "case", "related", "info", "audio"];
 
-export function newCard({ de, en, example = "", source = "manual", tags = [], ...extra }) {
+export function newCard({ de, en, example = "", source = "manual", tags = [], priority = false, ...extra }) {
   return {
     id: crypto.randomUUID(),
     de: de.trim(),
@@ -25,7 +25,9 @@ export function newCard({ de, en, example = "", source = "manual", tags = [], ..
     source,
     tags,
     created: new Date().toISOString(),
-    order: Math.random(), // new words are introduced in random order, not alphabetically
+    // New words come in random order, not alphabetically. Words you picked yourself (priority)
+    // get a negative order: they come first and don't count against the daily limit.
+    order: priority ? -Date.now() / 1e13 : Math.random(),
     suspended: false,
     fsrs: createEmptyCard(new Date()),
   };
@@ -47,6 +49,25 @@ export async function addCards(entries) {
   }
   await db.putMany("cards", fresh);
   return fresh.length;
+}
+
+/** Look up your card for a German word (matching the main form, e.g. "der Bahnhof"). */
+export async function findCard(de) {
+  const key = mainForm(de).toLowerCase();
+  return (await allCards()).find((c) => mainForm(c.de).toLowerCase() === key) ?? null;
+}
+
+/** You want to practise this word soon: new cards jump the queue, learned cards become due now. */
+export async function prioritize(card) {
+  const updated = { ...card, suspended: false };
+  if (card.fsrs.state === State.New) updated.order = -Date.now() / 1e13;
+  else updated.fsrs = { ...card.fsrs, due: new Date() };
+  await db.put("cards", updated);
+  return updated;
+}
+
+export function isPriority(card) {
+  return card.fsrs.state === State.New && card.order < 0;
 }
 
 /** Interval labels for each grade button, e.g. { 1: "1m", 3: "3d" }. */
@@ -83,9 +104,8 @@ export function buildQueue(cards, newAllowed, now = new Date()) {
   const due = active
     .filter((c) => c.fsrs.state !== State.New && c.fsrs.due <= now)
     .sort((a, b) => a.fsrs.due - b.fsrs.due);
-  const fresh = active
-    .filter((c) => c.fsrs.state === State.New)
-    .sort((a, b) => a.order - b.order)
-    .slice(0, Math.max(0, newAllowed));
-  return { due, fresh };
+  const newCards = active.filter((c) => c.fsrs.state === State.New).sort((a, b) => a.order - b.order);
+  const picked = newCards.filter(isPriority); // always included
+  const regular = newCards.filter((c) => !isPriority(c)).slice(0, Math.max(0, newAllowed));
+  return { due, fresh: [...picked, ...regular] };
 }

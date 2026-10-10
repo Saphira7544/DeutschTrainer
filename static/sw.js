@@ -1,7 +1,7 @@
 // Service worker: lets the app open offline. Network first (so updates show up right away),
 // falling back to the cached copy. API calls are never cached.
 // Bump the version when the file list changes. The Goethe deck and its audio are cached when first used.
-const CACHE = "deutsch-trainer-v2";
+const CACHE = "deutsch-trainer-v3";
 
 const SHELL = [
   "/",
@@ -16,6 +16,8 @@ const SHELL = [
   "/js/lib/text.js",
   "/js/lib/days.js",
   "/js/lib/anki.js",
+  "/js/lib/lexicon.js",
+  "/js/wordsheet.js",
   "/js/vendor/ts-fsrs.mjs",
   "/js/views/home.js",
   "/js/views/vocab.js",
