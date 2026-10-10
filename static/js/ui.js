@@ -25,7 +25,7 @@ export function h(tag, props, ...children) {
 }
 
 export function mount(root, ...children) {
-  root.replaceChildren(...children.flat().filter(Boolean));
+  root.replaceChildren(...children.flat(Infinity).filter((c) => c != null && c !== false));
 }
 
 let toastTimer;
@@ -68,8 +68,18 @@ export function speak(text, rate = 0.95) {
   speechSynthesis.speak(u);
 }
 
-export function speakButton(text) {
-  return h("button.icon-btn", { type: "button", title: "Listen", "aria-label": "Listen", onclick: (e) => (e.stopPropagation(), speak(text)) }, "🔊");
+let player;
+/** Play a recorded clip (native speaker), falling back to text-to-speech if it can't load. */
+export function say(text, audioUrl) {
+  if (!audioUrl) return speak(text);
+  speechSynthesis?.cancel();
+  player?.pause();
+  player = new Audio(audioUrl);
+  player.play().catch(() => speak(text));
+}
+
+export function speakButton(text, audioUrl) {
+  return h("button.icon-btn", { type: "button", title: "Listen", "aria-label": "Listen", onclick: (e) => (e.stopPropagation(), say(text, audioUrl)) }, "🔊");
 }
 
 export function shuffle(arr) {

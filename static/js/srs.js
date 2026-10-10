@@ -12,12 +12,16 @@ function revive(f) {
   return { ...f, due: new Date(f.due), last_review: f.last_review ? new Date(f.last_review) : undefined };
 }
 
-export function newCard({ de, en, example = "", source = "manual", tags = [] }) {
+// Extra info some sources (the Goethe deck) provide, shown on the back of the card.
+const EXTRA_FIELDS = ["plural", "exampleEn", "enNote", "conj", "case", "related", "info", "audio"];
+
+export function newCard({ de, en, example = "", source = "manual", tags = [], ...extra }) {
   return {
     id: crypto.randomUUID(),
     de: de.trim(),
     en: en.trim(),
     example: example.trim(),
+    ...Object.fromEntries(EXTRA_FIELDS.filter((k) => extra[k]).map((k) => [k, extra[k]])),
     source,
     tags,
     created: new Date().toISOString(),

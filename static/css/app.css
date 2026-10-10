@@ -188,6 +188,9 @@ label.check { display: flex; align-items: center; font-weight: 400; }
 .answer-text { font-size: 1.6rem; font-weight: 800; margin: 10px 0 4px; }
 .example { color: var(--muted); font-style: italic; }
 .flash-back { border-top: 1px dashed var(--border); margin-top: 8px; padding-top: 8px; }
+.more { margin-top: 8px; }
+.more summary { color: var(--muted); cursor: pointer; font-size: 0.9rem; }
+.more p { margin: 4px 0; }
 .actions { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
 .answer { font-size: 1.15rem; }
 
@@ -233,6 +236,13 @@ label.check { display: flex; align-items: center; font-weight: 400; }
 .topic-score { text-align: right; display: flex; flex-direction: column; font-weight: 700; white-space: nowrap; }
 .good { color: var(--good); } .ok { color: var(--warn); } .weak { color: var(--bad); }
 
+.progress.thin { height: 4px; margin: 6px 0 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.chip {
+  padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border);
+  background: var(--surface-2); color: var(--muted); font: inherit; font-weight: 600; cursor: pointer;
+}
+.chip.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .instruction { color: var(--muted); font-size: 0.95rem; }
 .exercise-sentence { font-size: 1.3rem; font-weight: 600; line-height: 1.5; margin: 10px 0; }
 .gap { display: inline-block; min-width: 70px; border-bottom: 3px solid var(--accent); margin: 0 4px; }

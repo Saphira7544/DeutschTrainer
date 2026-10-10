@@ -43,6 +43,7 @@ def test_static_app_is_served(client):
     assert "Deutsch" in res.text
     js = client.get("/js/app.js")
     assert js.headers["content-type"].startswith("text/javascript")
+    assert js.headers["cache-control"] == "no-cache"
 
 
 @pytest.mark.parametrize("headers", [{}, {"X-Access-Token": "wrong"}])

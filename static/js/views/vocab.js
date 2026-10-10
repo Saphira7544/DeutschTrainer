@@ -3,7 +3,7 @@ import { guessColumns, parseVocabFile } from "../lib/anki.js";
 import { checkVocab, mainForm } from "../lib/text.js";
 import { addCards, allCards, buildQueue, grade, previews, Rating, State } from "../srs.js";
 import { addActivity, getSettings, today } from "../store.js";
-import { h, mount, speak, speakButton, toast } from "../ui.js";
+import { h, loadJSON, mount, say, speakButton, toast } from "../ui.js";
 
 const SESSION_SIZE = 20;
 
@@ -35,9 +35,30 @@ async function overview(root) {
     }
   }
 
+  const hasDeck = cards.some((c) => c.source === "goethe");
+  async function loadDeck(e) {
+    e.target.disabled = true;
+    e.target.textContent = "Loading…";
+    try {
+      const { words } = await loadJSON("/data/goethe_deck.json");
+      const added = await addCards(words.map(({ id, ...w }) => ({ ...w, source: "goethe" })));
+      toast(`Added ${added} words 🎉`);
+      overview(root);
+    } catch (err) {
+      toast(err.message, "error");
+      e.target.disabled = false;
+    }
+  }
+
   mount(
     root,
     h("h1", "Words"),
+    !hasDeck &&
+      h("div.card.notice",
+        h("h3", "Goethe A1–B1 word list"),
+        h("p.muted", "2,859 words with native audio, examples, plurals and conjugations. New words come in a few at a time (setting: new words per day)."),
+        h("button.btn.primary.block", { type: "button", onclick: loadDeck }, "Add the Goethe deck"),
+      ),
     h("div.stats",
       stat(due.length, "to review"),
       stat(fresh.length, "new today"),
@@ -54,6 +75,21 @@ async function overview(root) {
       h("a.btn", { href: "#/vocab/import" }, "Import from Anki"),
       h("a.btn", { href: "#/vocab/list" }, "Browse words"),
     ),
+  );
+}
+
+/** Conjugation, case, related words and notes, folded away so the card stays quick. */
+function cardDetails(card) {
+  const rows = [
+    ["Forms", card.conj],
+    ["Case", card.case],
+    ["Related", card.related],
+    ["Note", card.info],
+  ].filter(([, v]) => v);
+  if (!rows.length) return null;
+  return h("details.more",
+    h("summary", "More"),
+    rows.map(([label, value]) => h("p.small", h("strong", `${label}: `), value)),
   );
 }
 
@@ -132,7 +168,7 @@ async function review(root) {
     const front =
       direction === "production"
         ? h("div.flash-front", h("p.prompt-text", card.en), h("form", { onsubmit: (e) => (e.preventDefault(), reveal()) }, input))
-        : h("div.flash-front", h("p.prompt-text", { lang: "de" }, card.de, " ", speakButton(card.de)));
+        : h("div.flash-front", h("p.prompt-text", { lang: "de" }, card.de, " ", speakButton(card.de, card.audio)));
     const actions = h("div.actions",
       direction === "production" && h("button.btn.primary", { type: "button", onclick: () => reveal() }, "Check"),
       h("button.btn", { type: "button", onclick: () => reveal(true) }, direction === "production" ? "I don't know – show me" : "Show meaning"),
@@ -140,7 +176,7 @@ async function review(root) {
     const box = h("div.card.flash", badges, front, actions);
     mount(root, header, box);
     if (direction === "production") input.focus();
-    else if (settings.autoSpeak) speak(card.de);
+    else if (settings.autoSpeak) say(card.de, card.audio);
 
     function reveal(skipped = false) {
       if (direction === "production" && !skipped) result = checkVocab(input.value, card.de);
@@ -154,9 +190,13 @@ async function review(root) {
       );
       const answer = h("div.flash-back",
         direction === "production"
-          ? h("p.answer-text", { lang: "de" }, card.de, " ", speakButton(card.de))
+          ? h("p.answer-text", { lang: "de" }, card.de, " ", speakButton(card.de, card.audio))
           : h("p.answer-text", card.en),
+        direction === "production" && card.plural && h("p.muted", { lang: "de" }, `Plural: die ${card.plural}`),
+        direction === "recognition" && card.enNote && h("p.muted.small", card.enNote),
         card.example && h("p.example", { lang: "de" }, card.example, " ", speakButton(card.example)),
+        card.exampleEn && h("p.muted.small", card.exampleEn),
+        cardDetails(card),
       );
       const labels = previews(card);
       const grades = h("div.grades",
@@ -165,7 +205,7 @@ async function review(root) {
         ),
       );
       mount(box, badges, front, feedback, answer, grades);
-      if (direction === "production" && settings.autoSpeak) speak(mainForm(card.de));
+      if (direction === "production" && settings.autoSpeak) say(mainForm(card.de), card.audio);
     }
 
     async function rate(r) {
@@ -285,8 +325,9 @@ async function listPage(root) {
     const el = h("details.word",
       h("summary", h("strong", { lang: "de" }, card.de), h("span", card.en), h("small.muted", state)),
       card.example && h("p.example", { lang: "de" }, card.example),
+      cardDetails(card),
       h("div.row",
-        speakButton(card.de),
+        speakButton(card.de, card.audio),
         h("button.btn.small", {
           type: "button",
           onclick: async () => {

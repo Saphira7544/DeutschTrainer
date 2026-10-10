@@ -47,9 +47,20 @@ export function mainForm(de) {
   return tidy(String(de ?? "").split(/[,;(]/)[0]);
 }
 
-/** Alternatives written as "a / b" are all accepted. */
-function alternatives(de) {
-  return String(de ?? "").split("/").map(mainForm).filter(Boolean);
+/**
+ * All accepted forms. "a / b" are alternatives; articles distribute over them:
+ * "der/die Verwandte" -> der Verwandte, die Verwandte; "das Hähnchen/Hühnchen" -> das Hähnchen, das Hühnchen.
+ */
+export function alternatives(de) {
+  // " / " (spaced) separates whole alternatives; "/" inside one shares the article.
+  return mainForm(de).split(/\s+\/\s+/).flatMap((part) => {
+    const m = part.match(/^((?:der|die|das)(?:\/(?:der|die|das))*) (.+)$/i);
+    if (m) {
+      const forms = m[2].split("/").map((f) => f.trim()).filter(Boolean);
+      return m[1].split("/").flatMap((art) => forms.map((f) => `${art.toLowerCase()} ${f}`));
+    }
+    return part.split("/").map((f) => f.trim()).filter(Boolean);
+  });
 }
 
 /**
@@ -61,12 +72,13 @@ export function checkVocab(input, de) {
   const forms = alternatives(de);
   if (!typed) return { status: "wrong", expected: forms[0] ?? "" };
   for (const form of forms) {
-    const target = normalize(form);
-    if (typed === target || typed === normalize(de)) {
+    if (typed === normalize(form) || typed === normalize(de)) {
       const note = tidy(input) !== form && tidy(input) !== tidy(de) ? `Watch the spelling: ${form}` : undefined;
       return { status: "correct", expected: form, note };
     }
-    const [first, ...rest] = target.split(" ");
+  }
+  for (const form of forms) {
+    const [first, ...rest] = normalize(form).split(" ");
     if (ARTICLES.includes(first) && rest.length) {
       const noun = rest.join(" ");
       const typedWords = typed.split(" ");

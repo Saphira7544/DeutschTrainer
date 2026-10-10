@@ -8,7 +8,7 @@ export const DEFAULTS = {
   newCardsPerDay: 10,
   vocabDirection: "production", // production (EN→DE) | recognition (DE→EN) | mixed
   autoSpeak: true,
-  grammarTopics: null, // topic ids used in mixed practice; null = all B1.2 focus topics
+  grammarLevels: null, // levels used in mixed grammar practice; null = all
 };
 
 // XP per activity. Speaking is worth the most because it's the hardest and most useful.

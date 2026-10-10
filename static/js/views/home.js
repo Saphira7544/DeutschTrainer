@@ -49,6 +49,6 @@ export async function render(root) {
       h("div", h("h3", "Speak"), h("p.muted", "Answer a question out loud, get friendly feedback")),
     ),
     !settings.accessToken &&
-      h("a.card.notice", { href: "#/settings" }, "⚠️ Add your access token in Settings to use grammar exercises and speaking."),
+      h("a.card.notice", { href: "#/settings" }, "⚠️ Add your access token in Settings to use speaking feedback and the AI extras."),
   );
 }

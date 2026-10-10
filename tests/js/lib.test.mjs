@@ -31,6 +31,11 @@ test("checkVocab handles articles", () => {
   assert.equal(checkVocab("Bahn", "der Bahnhof").status, "wrong");
   assert.equal(checkVocab("abfahren", "abfahren, fährt ab").status, "correct");
   assert.equal(checkVocab("Mama", "die Mutter / die Mama").status, "article");
+  assert.equal(checkVocab("die Verwandte", "der/die Verwandte").status, "correct");
+  assert.equal(checkVocab("der Verwandte", "der/die Verwandte").status, "correct");
+  assert.equal(checkVocab("das Hühnchen", "das Hähnchen/Hühnchen").status, "correct");
+  assert.equal(checkVocab("die Eltern", "die Eltern (Pl.)").status, "correct");
+  assert.equal(checkVocab("gerne", "gern/gerne").status, "correct");
 });
 
 test("stripMarkup removes Anki html and sounds", () => {

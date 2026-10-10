@@ -295,7 +295,8 @@ async function nextStaticPrompt(prompts) {
 
 async function weakestTopic(topics) {
   const records = Object.fromEntries((await db.all("grammar")).map((r) => [r.topic_id, r]));
-  const focus = topics.filter((t) => t.group === "focus");
+  // Speaking targets the B1 structures; the A-level basics are practised in grammar.
+  const focus = topics.filter((t) => t.level.startsWith("B1"));
   const score = (t) => {
     const r = records[t.id];
     return r?.attempts ? r.correct / r.attempts : 0.7; // untried topics sit in the middle
