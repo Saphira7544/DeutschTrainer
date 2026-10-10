@@ -51,6 +51,31 @@ export async function addCards(entries) {
   return fresh.length;
 }
 
+// Bump when tools/import_apkg.py starts producing corrected deck data, so existing cards get the fixes.
+export const DECK_VERSION = 2;
+
+/**
+ * Update the text of your Goethe cards from the current word list, keeping all review progress.
+ * Returns how many cards changed.
+ */
+export async function refreshDeckCards(words) {
+  const byKey = new Map(words.map((w) => [mainForm(w.de).toLowerCase(), w]));
+  const changed = [];
+  for (const card of await db.all("cards")) {
+    if (card.source !== "goethe") continue;
+    const w = byKey.get(mainForm(card.de).toLowerCase());
+    if (!w) continue;
+    const updated = { ...card, de: w.de, en: w.en, example: w.example ?? "" };
+    for (const k of EXTRA_FIELDS) {
+      if (w[k]) updated[k] = w[k];
+      else delete updated[k];
+    }
+    if (JSON.stringify(updated) !== JSON.stringify(card)) changed.push(updated);
+  }
+  await db.putMany("cards", changed);
+  return changed.length;
+}
+
 /** Look up your card for a German word (matching the main form, e.g. "der Bahnhof"). */
 export async function findCard(de) {
   const key = mainForm(de).toLowerCase();

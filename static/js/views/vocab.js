@@ -1,7 +1,7 @@
 import { db } from "../db.js";
 import { guessColumns, parseVocabFile } from "../lib/anki.js";
 import { checkVocab, mainForm } from "../lib/text.js";
-import { addCards, allCards, buildQueue, grade, isPriority, previews, Rating, State } from "../srs.js";
+import { addCards, allCards, buildQueue, DECK_VERSION, grade, isPriority, previews, Rating, refreshDeckCards, State } from "../srs.js";
 import { addActivity, getSettings, setSetting, today } from "../store.js";
 import { h, loadJSON, mount, say, speakButton, toast } from "../ui.js";
 
@@ -35,6 +35,21 @@ async function overview(root) {
     }
   }
 
+  // Cards from an older, uncorrected version of the deck: update their text, keep the progress.
+  if (settings.goetheDeckVersion !== DECK_VERSION && cards.some((c) => c.source === "goethe")) {
+    try {
+      const { words } = await loadJSON("/data/goethe_deck.json");
+      const fixed = await refreshDeckCards(words);
+      await setSetting("goetheDeckVersion", DECK_VERSION);
+      // Loaded before the "deck loaded" flag existed.
+      if (cards.filter((c) => c.source === "goethe").length > 1000) await setSetting("goetheDeckLoaded", true);
+      if (fixed) toast(`Corrected ${fixed} ${fixed === 1 ? "word" : "words"} from the Goethe deck (your progress is kept).`);
+      return overview(root);
+    } catch {
+      // Offline: try again next time.
+    }
+  }
+
   // Single words picked from exercises also come from the deck, so check a flag rather than the cards.
   const hasDeck = settings.goetheDeckLoaded;
   async function loadDeck(e) {
@@ -44,6 +59,7 @@ async function overview(root) {
       const { words } = await loadJSON("/data/goethe_deck.json");
       const added = await addCards(words.map(({ id, ...w }) => ({ ...w, source: "goethe" })));
       await setSetting("goetheDeckLoaded", true);
+      await setSetting("goetheDeckVersion", DECK_VERSION);
       toast(`Added ${added} words 🎉`);
       overview(root);
     } catch (err) {
