@@ -22,3 +22,4 @@ logs/
 # Rebuild with: .\.venv\Scripts\python.exe -I tools\import_apkg.py <deck.apkg>
 static/data/goethe_deck.json
 static/audio/goethe/
+*.apkg

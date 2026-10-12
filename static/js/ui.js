@@ -105,12 +105,25 @@ export function germanWord(de) {
 }
 
 let player;
-/** Play a recorded clip (native speaker), falling back to text-to-speech if it can't load. */
-export function say(text, audioUrl) {
-  if (!audioUrl) return speak(text);
+let playerUrl;
+/** "idb:goethe-123" → a playable URL for the recording stored on the phone (from the deck import). */
+async function audioSource(ref) {
+  if (!ref.startsWith("idb:")) return ref.replace(/^\//, ""); // relative to the app, wherever it's hosted
+  const { db } = await import("./db.js");
+  const row = await db.get("audio", ref.slice(4));
+  return row ? URL.createObjectURL(row.blob) : null;
+}
+
+/** Play a recorded clip (native speaker), falling back to text-to-speech if there isn't one. */
+export async function say(text, audioRef) {
+  if (!audioRef) return speak(text);
   speechSynthesis?.cancel();
   player?.pause();
-  player = new Audio(audioUrl);
+  if (playerUrl) URL.revokeObjectURL(playerUrl);
+  const src = await audioSource(audioRef).catch(() => null);
+  if (!src) return speak(text);
+  playerUrl = src.startsWith("blob:") ? src : null;
+  player = new Audio(src);
   player.play().catch(() => speak(text));
 }
 

@@ -1,103 +1,89 @@
 # DeutschTrainer
 
-A phone-first study app for getting from "I know the rules" to "I can just say it": spaced-repetition vocab, quick B1.2 grammar drills, and speaking practice with friendly, meaning-first feedback.
+A phone-first study app for getting from "I know the rules" to "I can just say it": spaced-repetition vocab, grammar drills from A1.2 to B1.2, and speaking practice with friendly, meaning-first feedback.
 
-**What's in version 1**
+It's a static web app (PWA) hosted on GitHub Pages. You install it on your Android home screen and it runs on the phone; there is no server.
 
-- **Words**: the Goethe A1–B1 word list (2,859 words with native audio, examples, plurals, conjugations), one tap to add. You can also import other Anki text exports or add words by hand. Reviews use FSRS, the scheduler modern Anki uses. You type the German from the English, because producing words is what makes them stick. Missing or wrong articles count as "almost".
-- **Grammar**: 42 topics from A1.2 to B1.2 with **806 built-in exercises** (multiple choice, fill-in-the-gap, rewrite the sentence). Practice works offline and costs nothing. Unseen exercises come first, then the ones you got wrong. Mixed practice serves more of your weak topics, filtered by the levels you pick. The AI is used only when you ask: *Is mine right too?* for an answer that differs from the key, or *Make 8 new ones* once a topic's bank is used up.
-- **📖 Rules**: every grammar topic has an explicit explanation, a comparison with English and with European Portuguese, and examples translated into both. Open it from the topic list or from any exercise. After each answer, the correct sentence is shown in 🇬🇧 English and 🇵🇹 Portuguese.
+## What it does
+
+- **Words**: the Goethe A1–B1 word list (2,859 words with native audio, examples, plurals, conjugations). You import it from your Anki deck file (`.apkg`) right on the phone. You can also import other Anki text exports or add words by hand. Reviews use FSRS, the scheduler modern Anki uses. You type the German from the English, because producing words is what makes them stick. Missing or wrong articles count as "almost".
+- **Grammar**: 42 topics from A1.2 to B1.2 with **806 built-in exercises** (multiple choice, fill-in-the-gap, rewrite the sentence). Works offline and costs nothing. Unseen exercises come first, then the ones you got wrong. Mixed practice serves more of your weak topics, filtered by the levels you pick.
+- **📖 Rules**: every grammar topic has an explicit explanation, a comparison with English and with European Portuguese, and examples translated into both. After each answer, the correct sentence is shown in 🇬🇧 English and 🇵🇹 Portuguese.
 - **Gender colours** like the Goethe deck: **der** blue, **die** red, **das** green.
-- **Tap any word** in a grammar exercise to see its meaning from the Goethe list. Inflected forms are recognised (fährt → fahren, Kollegen → der Kollege, hätte → haben). One tap adds it to your words, and it comes **first in your next review**, outside the daily new-word limit. Words not on the list: *🤖 Look it up* (AI) or type the meaning yourself.
-- **Speak**: answer a question out loud (or type). The AI first restates what you meant, shows the minimal correction as a diff, gives a more natural local version, and picks **at most 3** fixes that matter. Then *Say it again*. Fixes go to the **Notebook** and steer your grammar exercises, and new words can become cards with one tap.
-- **Reminders** (More → Reminders), at your chosen times (default 08:30, 13:00, 20:30):
-  - **Google Calendar**: one tap per time creates a daily repeating event with a dramatic title. The Google Calendar app then notifies you at exactly those times. This is the reliable option.
-  - **App notifications**: guilt-trip messages that appear **only if you haven't reached today's goal**, with your streak in them. For the installed app, Chrome wakes it in the background every few hours, but Chrome decides when, so they're a bonus, not an alarm clock. Exact-time pushes would need a server.
+- **Tap any word** in a grammar exercise to see its meaning from the Goethe list. Inflected forms are recognised (fährt → fahren, Kollegen → der Kollege, hätte → haben). One tap adds it to your words, and it comes **first in your next review**.
+- **Speak**: answer a question out loud (or type). The AI restates what you meant, shows the minimal correction, gives a more natural local version, and picks **at most 3** fixes that matter. Fixes go to the **Notebook** and steer your grammar exercises.
+- **Reminders** (More → Reminders): daily Google Calendar events with dramatic titles (exact times), plus guilt-trip notifications from the installed app, but only when you haven't reached today's goal.
 - **Streak** with a daily XP goal (1 per card, 2 per exercise, 5 per spoken answer).
-- Installable on Android as an app (PWA). Words and grammar reviews work offline.
 
-All your progress lives **on the phone** (IndexedDB). The server only holds the OpenAI key and makes the AI calls. Use *More → Download backup* now and then.
+All your progress lives **on the phone** (IndexedDB). Use *More → Download backup* now and then.
 
-## Setup
+## Using it on your phone
 
-```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
-copy .env.example .env   # then fill in OPENAI_API_KEY and APP_ACCESS_TOKEN
-```
+1. Open **https://saphira7544.github.io/DeutschTrainer/** in Chrome on Android.
+2. Chrome menu ⋮ → **Install app** (or *Add to Home screen*).
+3. **Words** → *Choose the .apkg file* → pick the Goethe deck. It takes a few seconds; the words and recordings are stored on the phone.
+4. **More → Settings** → paste your **OpenAI API key** → Save. Saving tests the key.
+5. **More → Reminders** → add the Google Calendar events and turn on notifications.
 
-Build the word list from your Goethe Anki deck. The output is git-ignored because it's third-party content (word list, texts, recordings):
+### The OpenAI key
 
-```powershell
-.\.venv\Scripts\python.exe -I tools\import_apkg.py "C:\path\to\Goethe_A1-B1_Anki_Deck.apkg"
-```
+The AI features (speaking feedback, transcription, *Is mine right too?*, AI exercises and word lookups) call OpenAI directly from your phone with **your own key**. The key is stored only in the app on your phone. It's never in the code, on GitHub, or in backup files.
 
-It writes `static/data/goethe_deck.json` and `static/audio/goethe/` (about 30 MB). It also cleans up the deck: adds missing articles (`tools/goethe_article_fixes.json`), tidies plural notes, and recovers words the deck lost.
+Create it at platform.openai.com → API keys, ideally in a separate project with a **monthly budget limit**. Words and grammar make no AI calls unless you tap an AI button, so speaking is the only regular cost. The defaults are `gpt-5.4-mini` and `gpt-4o-mini-transcribe`; you can change the model in Settings → Advanced.
 
-Create the access token with `.\.venv\Scripts\python.exe -c "import secrets; print(secrets.token_urlsafe(24))"`, then enter the same value in the app under **More → Settings**.
+## Developing
 
-## Run
+No build step and no dependencies: the app is plain HTML, CSS and JavaScript modules in `static/`.
 
 ```powershell
-.\.venv\Scripts\python.exe -m uvicorn app.main:app --reload --port 8010
+python tools/serve.py
 ```
 
-Open http://localhost:8010. Chrome DevTools' device toolbar (Ctrl+Shift+M) shows it at phone size.
-
-### On your phone, before it's hosted
-
-The microphone and "install app" only work over HTTPS or on `localhost`. Two ways to use the PC server from your Android phone:
-
-1. **USB (most reliable)**: turn on USB debugging on the phone, connect it, run `adb reverse tcp:8010 tcp:8010`, then open `http://localhost:8010` in Chrome on the phone.
-2. **Same Wi-Fi**: start the server with `--host 0.0.0.0` and allow it through the Windows firewall. On the phone, open `chrome://flags/#unsafely-treat-insecure-origin-as-secure`, add `http://<your-PC-IP>:8010`, relaunch Chrome, and open that address.
-
-Then use Chrome's menu → **Add to Home screen / Install app**.
-
-## Tests
+Open http://localhost:8010/DeutschTrainer/. The local server serves the app under `/DeutschTrainer/` exactly like GitHub Pages does, so a wrong absolute path breaks locally first. Chrome DevTools' device toolbar (Ctrl+Shift+M) shows it at phone size.
 
 ```powershell
-.\.venv\Scripts\python.exe -m pytest      # API (AI calls are faked: no key or network needed)
-node --test "tests/js/*.test.mjs"         # answer checking, Anki parsing, streaks, diff
+node --test "tests/js/*.test.mjs"
 ```
+
+The tests cover answer checking, the Anki/deck parsing, streaks, word lookup, reminders, the AI instructions, and the whole grammar bank (every exercise answerable, translated and with a rule).
+
+## Publishing
+
+Every push to `main` runs the tests and publishes `static/` to GitHub Pages (`.github/workflows/pages.yml`).
+
+One-time setup on GitHub: the repo must be **public** (free accounts), and **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 
 ## Where things are
 
 ```text
-app/
-  main.py          FastAPI app: /api routes + serves the PWA from static/
-  api.py           endpoints: transcribe, speaking feedback, new prompt, grammar exercises, answer check
-  prompts.py       all AI instructions and JSON schemas (tune the teaching style here)
-  llm.py           OpenAI calls (structured JSON + transcription)
-  config.py        settings from .env
 static/
   index.html, sw.js, manifest.webmanifest, css/, icons/
   data/grammar_topics.json     the 42 grammar topics and their levels
-  data/grammar_rules.json      the rule, EN/PT comparison and translated examples per topic
+  data/grammar_rules.json      rule, EN/PT comparison and translated examples per topic
   data/grammar/<level>.json    the exercise bank. Compact format: t = type (c choice / g gap / r rewrite),
                                s = sentence (___ marks the gap), o = options, a = answer(s), h = hint,
-                               i = instruction, e = explanation. tests/test_grammar_bank.py validates it.
+                               i = instruction, e = explanation
   data/grammar/<level>.tr.json [English, Portuguese] translation of each exercise's answer, same order
   data/speaking_prompts.json   built-in speaking questions
-  data/goethe_deck.json        word list built by tools/import_apkg.py (not in git)
-  audio/goethe/                native recordings for the word list (not in git)
-  js/app.js        router + bottom tabs
-  js/views/        one file per screen
-  js/srs.js        vocab cards + FSRS scheduling (js/vendor/ts-fsrs.mjs, MIT)
-  js/lib/          pure logic: answer checking, Anki import, streaks, word lookup, reminder messages (unit-tested)
-  js/reminders.js  Google Calendar links + notification settings (the nagging itself runs in sw.js)
-  js/wordsheet.js  tap-to-translate panel, reusable on any screen
-tools/
-  import_apkg.py   converts the Goethe Anki deck into the app's word list + audio
-  goethe_*_fixes.json  corrections for the deck (missing articles, cards with a verb's meaning on a noun)
-tests/
+  data/goethe_fixes.json       corrections applied when the Goethe deck is imported
+  js/app.js          router + bottom tabs
+  js/views/          one file per screen
+  js/ai.js           OpenAI calls (with the key stored on the phone)
+  js/deckimport.js   imports the Goethe .apkg on the phone (JSZip + sql.js), stores words and audio
+  js/srs.js          vocab cards + FSRS scheduling
+  js/wordsheet.js    tap-to-translate panel
+  js/reminders.js    Google Calendar links + notification settings (the nagging itself runs in sw.js)
+  js/lib/            pure logic, unit-tested: answer checking, deck parsing, AI instructions (prompts.js),
+                     streaks, word lookup, reminder messages
+  js/vendor/         ts-fsrs (MIT), JSZip (MIT), sql.js (MIT)
+tools/serve.py       local server that mimics GitHub Pages
+tests/js/            node tests
 ```
 
-## Costs
-
-Defaults are `gpt-5.4-mini` for feedback and `gpt-4o-mini-transcribe` for speech. Both can be changed in `.env`. Words and grammar make no AI calls unless you tap an AI button, so speaking is the only regular cost. The API rejects recordings over about 2 minutes and very long texts.
+The Goethe deck is someone else's content, so it's never in this repo: you import your own copy on the phone.
 
 ## Ideas for next versions
 
-- Hosting so it works anywhere (Railway, Render or Vercel)
 - "Fast switch" drills: timed EN→DE sentence prompts to train answering without translating in your head
 - Shadowing: listen to a sentence and repeat it
 - Free conversation mode

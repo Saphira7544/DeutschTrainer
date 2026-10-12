@@ -1,7 +1,7 @@
 // Tiny promise wrapper around IndexedDB. All learning data lives on the phone.
 
 const DB_NAME = "deutsch-trainer";
-const VERSION = 1;
+const VERSION = 2;
 
 export const STORES = {
   cards: "id", // vocab cards with their FSRS schedule
@@ -11,13 +11,19 @@ export const STORES = {
   settings: "key",
 };
 
+// The imported Goethe deck: big and re-importable from the .apkg, so not part of backups.
+export const DECK_STORES = {
+  audio: "id", // { id: "goethe-<note id>", blob } native recordings
+  deck: "id", // { id: "goethe", words: [...] } the word list, used as the tap-to-translate dictionary
+};
+
 let dbPromise;
 
 function open() {
   dbPromise ??= new Promise((resolve, reject) => {
     const req = indexedDB.open(DB_NAME, VERSION);
     req.onupgradeneeded = () => {
-      for (const [name, keyPath] of Object.entries(STORES)) {
+      for (const [name, keyPath] of Object.entries({ ...STORES, ...DECK_STORES })) {
         if (!req.result.objectStoreNames.contains(name)) req.result.createObjectStore(name, { keyPath });
       }
     };

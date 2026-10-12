@@ -1,4 +1,4 @@
-import { post, postAudio } from "../api.js";
+import { newPrompt, speakingFeedback, transcribe as aiTranscribe } from "../ai.js";
 import { db } from "../db.js";
 import { wordDiff } from "../lib/text.js";
 import { addCards } from "../srs.js";
@@ -15,8 +15,8 @@ const VERDICTS = {
 
 export async function render(root) {
   const [{ prompts }, { topics }, settings] = await Promise.all([
-    loadJSON("/data/speaking_prompts.json"),
-    loadJSON("/data/grammar_topics.json"),
+    loadJSON("data/speaking_prompts.json"),
+    loadJSON("data/grammar_topics.json"),
     getSettings(),
   ]);
   const topicTitle = Object.fromEntries(topics.map((t) => [t.id, t.title]));
@@ -55,7 +55,7 @@ export async function render(root) {
     btn.disabled = true;
     try {
       const target = await weakestTopic(topics);
-      const p = await post("/api/speaking/prompt", { target_topic: target, avoid: [current.de] });
+      const p = await newPrompt(target, [current.de]);
       current = { ...p, ai: true };
       reset();
     } catch (err) {
@@ -156,7 +156,7 @@ export async function render(root) {
   async function transcribe(blob) {
     mount(answerBox, spinner("Listening to your answer…"));
     try {
-      const { text } = await postAudio("/api/speaking/transcribe", blob);
+      const text = await aiTranscribe(blob);
       if (!text) {
         toast("I couldn't hear anything. Try again a bit closer to the mic.", "error");
         return drawIdle();
@@ -174,12 +174,7 @@ export async function render(root) {
     drawAnswer(answer, mode);
     mount(feedbackBox, spinner("Understanding what you meant…"));
     try {
-      const fb = await post("/api/speaking/feedback", {
-        prompt: current.de,
-        answer,
-        mode,
-        target_topic: current.target ?? null,
-      });
+      const fb = await speakingFeedback({ prompt: current.de, answer, mode, targetTopic: current.target ?? null });
       await addActivity("speaking");
       await saveMistakes(fb, current.de);
       drawFeedback(answer, fb);

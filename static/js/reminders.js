@@ -54,7 +54,7 @@ async function turnOn() {
   const background = await registerBackgroundCheck();
   await reg.showNotification("🔔 This is what guilt feels like.", {
     body: "Notifications are on. Skip German and I will find you.",
-    icon: "/icons/icon-192.png",
+    icon: "icons/icon-192.png",
     tag: "nag",
   });
   return background;
@@ -75,7 +75,7 @@ export async function remindersCard() {
   async function draw() {
     const caps = await capabilities();
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const appUrl = `${location.origin}/`;
+    const appUrl = new URL("./", location.href).href; // works under /DeutschTrainer/ too
     const on = (await getSettings()).notifications && caps.notifications === "granted";
 
     const inputs = times.map((t, i) =>

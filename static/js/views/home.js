@@ -48,7 +48,7 @@ export async function render(root) {
       h("span.tile-icon", "🎙️"),
       h("div", h("h3", "Speak"), h("p.muted", "Answer a question out loud, get friendly feedback")),
     ),
-    !settings.accessToken &&
-      h("a.card.notice", { href: "#/settings" }, "⚠️ Add your access token in Settings to use speaking feedback and the AI extras."),
+    !settings.openaiKey &&
+      h("a.card.notice", { href: "#/settings" }, "⚠️ Add your OpenAI API key in More → Settings to use speaking feedback and the AI extras."),
   );
 }

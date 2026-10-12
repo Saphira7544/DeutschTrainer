@@ -1,51 +1,56 @@
 // Service worker (a module): lets the app open offline, and nags you when you haven't practised.
-// Network first (so updates show up right away), falling back to the cached copy. API calls are never cached.
-import { computeStreak, dayKey } from "/js/lib/days.js";
-import { nagFor } from "/js/lib/nag.js";
+// Network first (so updates show up right away), falling back to the cached copy.
+// All paths are relative to this file, so the app works wherever it's hosted (e.g. github.io/DeutschTrainer/).
+import { computeStreak, dayKey } from "./js/lib/days.js";
+import { nagFor } from "./js/lib/nag.js";
 
-// Bump the version when the file list changes. The Goethe deck and its audio are cached when first used.
-const CACHE = "deutsch-trainer-v5";
+// Bump the version when the file list changes. Vendor libraries for the deck import are cached when first used.
+const CACHE = "deutsch-trainer-v6";
 
 const SHELL = [
-  "/",
-  "/index.html",
-  "/css/app.css",
-  "/js/app.js",
-  "/js/api.js",
-  "/js/db.js",
-  "/js/store.js",
-  "/js/srs.js",
-  "/js/ui.js",
-  "/js/lib/text.js",
-  "/js/lib/days.js",
-  "/js/lib/anki.js",
-  "/js/lib/lexicon.js",
-  "/js/lib/nag.js",
-  "/js/wordsheet.js",
-  "/js/reminders.js",
-  "/js/vendor/ts-fsrs.mjs",
-  "/js/views/home.js",
-  "/js/views/vocab.js",
-  "/js/views/grammar.js",
-  "/js/views/speaking.js",
-  "/js/views/notebook.js",
-  "/js/views/settings.js",
-  "/data/grammar_topics.json",
-  "/data/speaking_prompts.json",
-  "/data/grammar/A1.2.json",
-  "/data/grammar/A2.1.json",
-  "/data/grammar/A2.2.json",
-  "/data/grammar/B1.1.json",
-  "/data/grammar/B1.2.json",
-  "/data/grammar/A1.2.tr.json",
-  "/data/grammar/A2.1.tr.json",
-  "/data/grammar/A2.2.tr.json",
-  "/data/grammar/B1.1.tr.json",
-  "/data/grammar/B1.2.tr.json",
-  "/data/grammar_rules.json",
-  "/manifest.webmanifest",
-  "/icons/icon-192.png",
-  "/icons/icon-512.png",
+  "./",
+  "index.html",
+  "css/app.css",
+  "js/app.js",
+  "js/ai.js",
+  "js/db.js",
+  "js/store.js",
+  "js/srs.js",
+  "js/ui.js",
+  "js/deckimport.js",
+  "js/wordsheet.js",
+  "js/reminders.js",
+  "js/lib/text.js",
+  "js/lib/days.js",
+  "js/lib/anki.js",
+  "js/lib/goethe.js",
+  "js/lib/lexicon.js",
+  "js/lib/nag.js",
+  "js/lib/prompts.js",
+  "js/vendor/ts-fsrs.mjs",
+  "js/views/home.js",
+  "js/views/vocab.js",
+  "js/views/grammar.js",
+  "js/views/speaking.js",
+  "js/views/notebook.js",
+  "js/views/settings.js",
+  "data/grammar_topics.json",
+  "data/grammar_rules.json",
+  "data/speaking_prompts.json",
+  "data/goethe_fixes.json",
+  "data/grammar/A1.2.json",
+  "data/grammar/A2.1.json",
+  "data/grammar/A2.2.json",
+  "data/grammar/B1.1.json",
+  "data/grammar/B1.2.json",
+  "data/grammar/A1.2.tr.json",
+  "data/grammar/A2.1.tr.json",
+  "data/grammar/A2.2.tr.json",
+  "data/grammar/B1.1.tr.json",
+  "data/grammar/B1.2.tr.json",
+  "manifest.webmanifest",
+  "icons/icon-192.png",
+  "icons/icon-512.png",
 ];
 
 self.addEventListener("install", (event) => {
@@ -62,7 +67,8 @@ self.addEventListener("activate", (event) => {
 
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
-  if (event.request.method !== "GET" || url.origin !== location.origin || url.pathname.startsWith("/api/")) return;
+  // Only our own files; calls to OpenAI (another origin) go straight to the network.
+  if (event.request.method !== "GET" || url.origin !== location.origin) return;
   event.respondWith(
     fetch(event.request)
       .then((res) => {
@@ -72,7 +78,7 @@ self.addEventListener("fetch", (event) => {
         }
         return res;
       })
-      .catch(() => caches.match(event.request, { ignoreSearch: true }).then((hit) => hit ?? caches.match("/index.html"))),
+      .catch(() => caches.match(event.request, { ignoreSearch: true }).then((hit) => hit ?? caches.match("index.html"))),
   );
 });
 
@@ -124,10 +130,10 @@ async function maybeNag() {
   await saveSetting("lastNagSlot", nag.slotKey);
   await self.registration.showNotification(nag.title, {
     body: nag.body,
-    icon: "/icons/icon-192.png",
-    badge: "/icons/icon-192.png",
+    icon: "icons/icon-192.png",
+    badge: "icons/icon-192.png",
     tag: "nag",
-    data: { url: "/#/" },
+    data: { url: new URL("./#/", self.registration.scope).href },
   });
 }
 
@@ -140,8 +146,8 @@ self.addEventListener("notificationclick", (event) => {
   event.notification.close();
   event.waitUntil(
     self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((wins) => {
-      const win = wins.find((w) => new URL(w.url).origin === location.origin);
-      return win ? win.focus() : self.clients.openWindow(event.notification.data?.url ?? "/");
+      const win = wins.find((w) => w.url.startsWith(self.registration.scope));
+      return win ? win.focus() : self.clients.openWindow(event.notification.data?.url ?? self.registration.scope);
     }),
   );
 });

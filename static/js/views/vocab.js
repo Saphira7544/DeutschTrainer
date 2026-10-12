@@ -1,9 +1,10 @@
 import { db } from "../db.js";
 import { guessColumns, parseVocabFile } from "../lib/anki.js";
 import { checkVocab, mainForm } from "../lib/text.js";
-import { addCards, allCards, buildQueue, DECK_VERSION, grade, isPriority, previews, Rating, refreshDeckCards, State } from "../srs.js";
-import { addActivity, getSettings, setSetting, today } from "../store.js";
-import { germanWord, h, loadJSON, mount, say, speakButton, toast } from "../ui.js";
+import { addCards, allCards, buildQueue, grade, isPriority, previews, Rating, State } from "../srs.js";
+import { importGoetheDeck } from "../deckimport.js";
+import { addActivity, getSettings, today } from "../store.js";
+import { germanWord, h, mount, say, speakButton, toast } from "../ui.js";
 
 const SESSION_SIZE = 20;
 
@@ -35,38 +36,22 @@ async function overview(root) {
     }
   }
 
-  // Cards from an older, uncorrected version of the deck: update their text, keep the progress.
-  if (settings.goetheDeckVersion !== DECK_VERSION && cards.some((c) => c.source === "goethe")) {
-    try {
-      const { words } = await loadJSON("/data/goethe_deck.json");
-      const fixed = await refreshDeckCards(words);
-      await setSetting("goetheDeckVersion", DECK_VERSION);
-      // Loaded before the "deck loaded" flag existed.
-      if (cards.filter((c) => c.source === "goethe").length > 1000) await setSetting("goetheDeckLoaded", true);
-      if (fixed) toast(`Corrected ${fixed} ${fixed === 1 ? "word" : "words"} from the Goethe deck (your progress is kept).`);
-      return overview(root);
-    } catch {
-      // Offline: try again next time.
-    }
-  }
-
   // Single words picked from exercises also come from the deck, so check a flag rather than the cards.
   const hasDeck = settings.goetheDeckLoaded;
-  async function loadDeck(e) {
-    e.target.disabled = true;
-    e.target.textContent = "Loading…";
+  const deckFile = h("input", { type: "file", accept: ".apkg,application/octet-stream,application/zip", hidden: true });
+  const deckStatus = h("p.muted.small");
+  deckFile.addEventListener("change", async () => {
+    const file = deckFile.files[0];
+    if (!file) return;
     try {
-      const { words } = await loadJSON("/data/goethe_deck.json");
-      const added = await addCards(words.map(({ id, ...w }) => ({ ...w, source: "goethe" })));
-      await setSetting("goetheDeckLoaded", true);
-      await setSetting("goetheDeckVersion", DECK_VERSION);
-      toast(`Added ${added} words 🎉`);
+      const result = await importGoetheDeck(file, (msg) => (deckStatus.textContent = msg));
+      toast(`Added ${result.added} words with ${result.audio} recordings 🎉`);
       overview(root);
     } catch (err) {
+      deckStatus.textContent = "";
       toast(err.message, "error");
-      e.target.disabled = false;
     }
-  }
+  });
 
   mount(
     root,
@@ -74,8 +59,10 @@ async function overview(root) {
     !hasDeck &&
       h("div.card.notice",
         h("h3", "Goethe A1–B1 word list"),
-        h("p.muted", "2,859 words with native audio, examples, plurals and conjugations. New words come in a few at a time (setting: new words per day)."),
-        h("button.btn.primary.block", { type: "button", onclick: loadDeck }, "Add the Goethe deck"),
+        h("p.muted", "2,859 words with native audio, examples, plurals and conjugations – imported from your Anki deck file (.apkg), right here on the phone. New words come in a few at a time (setting: new words per day)."),
+        h("button.btn.primary.block", { type: "button", onclick: () => deckFile.click() }, "Choose the .apkg file"),
+        deckStatus,
+        deckFile,
       ),
     h("div.stats",
       stat(due.length, "to review"),

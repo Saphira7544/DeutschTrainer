@@ -1,17 +1,17 @@
 // Tap-to-translate: makes German text tappable and shows a word's meaning in a bottom sheet,
 // with a button to add it to your words (it then comes first in your next review).
-import { post } from "./api.js";
+import { lookupWord } from "./ai.js";
 import { buildLexicon, tokenize } from "./lib/lexicon.js";
 import { addCards, findCard, isPriority, prioritize, State } from "./srs.js";
-import { germanWord, h, loadJSON, mount, openSheet, speakButton, spinner } from "./ui.js";
+import { deckWords } from "./deckimport.js";
+import { germanWord, h, mount, openSheet, speakButton, spinner } from "./ui.js";
 
-let lexiconPromise;
-/** The Goethe word list as a dictionary (offline). Empty if the deck file isn't there. */
-function lexicon() {
-  lexiconPromise ??= loadJSON("/data/goethe_deck.json")
-    .then(({ words }) => buildLexicon(words))
-    .catch(() => buildLexicon([]));
-  return lexiconPromise;
+let lexiconCache = null;
+/** The imported Goethe word list as a dictionary (offline). Rebuilt when the deck changes. */
+async function lexicon() {
+  const words = await deckWords();
+  if (lexiconCache?.size !== words.length) lexiconCache = { size: words.length, lex: buildLexicon(words) };
+  return lexiconCache.lex;
 }
 
 /** Turn German text into nodes where every word opens the word sheet. */
@@ -46,7 +46,7 @@ function notFound(word, sentence, body) {
         btn.disabled = true;
         mount(status, spinner("Asking the AI…"));
         try {
-          const entry = await post("/api/words/lookup", { word, sentence: sentence.replace("___", "…") });
+          const entry = await lookupWord(word, sentence.replace("___", "…"));
           mount(body, entryBlock(entry, "lookup"));
         } catch (err) {
           mount(status, h("p.muted.small", err.message));

@@ -1,9 +1,10 @@
 // App-level data helpers on top of db.js: settings, XP/streak, backups.
-import { db, STORES } from "./db.js";
+import { db, DECK_STORES, STORES } from "./db.js";
 import { computeStreak, dayKey } from "./lib/days.js";
 
 export const DEFAULTS = {
-  accessToken: "",
+  openaiKey: "", // stored only on this device
+  openaiModel: "",
   dailyGoal: 30, // XP per day to keep the streak
   newCardsPerDay: 10,
   vocabDirection: "production", // production (EN→DE) | recognition (DE→EN) | mixed
@@ -53,7 +54,8 @@ export async function streakInfo() {
 export async function exportBackup() {
   const data = {};
   for (const store of Object.keys(STORES)) data[store] = await db.all(store);
-  data.settings = data.settings.filter((s) => s.key !== "accessToken");
+  // The API key never goes into a backup file.
+  data.settings = data.settings.filter((s) => s.key !== "openaiKey");
   return { app: "deutsch-trainer", version: 1, exported: new Date().toISOString(), data };
 }
 
@@ -63,7 +65,7 @@ export async function importBackup(backup) {
     const rows = backup.data[store];
     if (!Array.isArray(rows)) continue;
     if (store === "settings") {
-      await db.putMany(store, rows.filter((r) => r.key !== "accessToken"));
+      await db.putMany(store, rows.filter((r) => r.key !== "openaiKey"));
     } else {
       await db.clear(store);
       await db.putMany(store, rows);
@@ -72,5 +74,5 @@ export async function importBackup(backup) {
 }
 
 export async function wipeAll() {
-  for (const store of Object.keys(STORES)) await db.clear(store);
+  for (const store of Object.keys({ ...STORES, ...DECK_STORES })) await db.clear(store);
 }

@@ -1,4 +1,4 @@
-import { checkToken } from "../api.js";
+import { checkKey, DEFAULT_MODEL } from "../ai.js";
 import { exportBackup, getSettings, importBackup, setSetting, wipeAll } from "../store.js";
 import { remindersCard } from "../reminders.js";
 import { h, mount, toast } from "../ui.js";
@@ -6,7 +6,8 @@ import { h, mount, toast } from "../ui.js";
 export async function render(root) {
   const s = await getSettings();
 
-  const token = h("input", { type: "password", value: s.accessToken, placeholder: "APP_ACCESS_TOKEN from the server", autocomplete: "off" });
+  const token = h("input", { type: "password", value: s.openaiKey, placeholder: "sk-…", autocomplete: "off", spellcheck: false });
+  const model = h("input", { value: s.openaiModel, placeholder: DEFAULT_MODEL, autocomplete: "off", spellcheck: false });
   const goal = numberInput(s.dailyGoal, 5, 200);
   const newCards = numberInput(s.newCardsPerDay, 0, 50);
   const direction = h("select",
@@ -18,7 +19,8 @@ export async function render(root) {
 
   async function save(e) {
     e.preventDefault();
-    await setSetting("accessToken", token.value.trim());
+    await setSetting("openaiKey", token.value.trim());
+    await setSetting("openaiModel", model.value.trim());
     await setSetting("dailyGoal", clamp(goal.value, 5, 200));
     await setSetting("newCardsPerDay", clamp(newCards.value, 0, 50));
     await setSetting("vocabDirection", direction.value);
@@ -26,8 +28,8 @@ export async function render(root) {
     window.dispatchEvent(new Event("xp")); // refresh the streak badge (goal may have changed)
     if (token.value.trim()) {
       try {
-        await checkToken();
-        toast("Saved ✓ Connected to the server.");
+        await checkKey();
+        toast("Saved ✓ OpenAI accepted the key.");
       } catch (err) {
         toast(`Saved, but: ${err.message}`, "error");
       }
@@ -65,7 +67,12 @@ export async function render(root) {
     reminders,
     h("form.card", { onsubmit: save },
       h("h3", "Settings"),
-      h("label", "Access token", token),
+      h("label", "OpenAI API key", token,
+        h("small.muted", "Stored only on this phone. Create one at platform.openai.com → API keys, ideally in a project with a monthly budget limit.")),
+      h("details.more",
+        h("summary", "Advanced"),
+        h("label", "AI model", model, h("small.muted", `Leave empty for ${DEFAULT_MODEL}.`)),
+      ),
       h("label", "Daily goal (XP)", goal, h("small.muted", "1 XP per card · 2 per grammar exercise · 5 per spoken answer")),
       h("label", "New words per day", newCards),
       h("label", "Vocab direction", direction),

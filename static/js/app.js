@@ -74,7 +74,7 @@ refreshStreak();
 requestPersistence();
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/sw.js", { type: "module" }).catch((err) => console.warn("Service worker not registered", err));
+  navigator.serviceWorker.register("sw.js", { type: "module" }).catch((err) => console.warn("Service worker not registered", err));
   // Re-ask for background checks on every start: Chrome only grants them to installed, regularly used apps.
   getSettings().then((s) => s.notifications && registerBackgroundCheck());
 }

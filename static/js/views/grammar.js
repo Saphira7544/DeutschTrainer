@@ -1,6 +1,6 @@
 // Grammar practice. Exercises come from the built-in bank (static/data/grammar/<level>.json);
 // the AI is only used when you ask for it (new exercises, or a second opinion on your answer).
-import { post } from "../api.js";
+import { checkAnswer as aiCheck, makeExercises } from "../ai.js";
 import { db } from "../db.js";
 import { checkAnswer } from "../lib/text.js";
 import { addActivity, getSettings, setSetting } from "../store.js";
@@ -14,7 +14,7 @@ const DEFAULT_INSTRUCTION = { choice: "Choose the right answer.", gap: "Fill in 
 
 let topicsCache;
 async function loadTopics() {
-  topicsCache ??= await loadJSON("/data/grammar_topics.json");
+  topicsCache ??= await loadJSON("data/grammar_topics.json");
   return topicsCache;
 }
 
@@ -22,8 +22,8 @@ const bankCache = {};
 /** Exercises of one level, keyed by topic, in the app's format. */
 async function loadBank(level) {
   bankCache[level] ??= Promise.all([
-    loadJSON(`/data/grammar/${level}.json`),
-    loadJSON(`/data/grammar/${level}.tr.json`).catch(() => ({})), // English + Portuguese of each answer
+    loadJSON(`data/grammar/${level}.json`),
+    loadJSON(`data/grammar/${level}.tr.json`).catch(() => ({})), // English + Portuguese of each answer
   ]).then(([raw, translations]) =>
     Object.fromEntries(
       Object.entries(raw).map(([topicId, items]) => [
@@ -49,7 +49,7 @@ async function loadBank(level) {
 
 let rulesCache;
 function loadRules() {
-  rulesCache ??= loadJSON("/data/grammar_rules.json");
+  rulesCache ??= loadJSON("data/grammar_rules.json");
   return rulesCache;
 }
 
@@ -297,7 +297,7 @@ async function practice(root, topicId) {
         onclick: async () => {
           extra.replaceChildren(spinner("Asking the AI…"));
           try {
-            const ai = await post("/api/grammar/check", { exercise: ex, answer });
+            const ai = await aiCheck(ex, answer);
             extra.replaceChildren(
               h("p", h("strong", ai.correct ? "✓ The AI says yours is also correct. " : "✗ "), ai.feedback),
               !ai.correct && ai.corrected && ai.corrected !== answer && h("p", { lang: "de" }, h("span.muted", "Your answer, fixed: "), ai.corrected),
@@ -380,7 +380,7 @@ async function practice(root, topicId) {
     try {
       const rec = await topicRecord(id);
       const recentMistakes = rec.recent.map((m) => `${m.sentence} → wrote "${m.answer}", correct: "${m.expected}"`);
-      const { exercises } = await post("/api/grammar/exercises", { topic_id: id, count: 8, recent_mistakes: recentMistakes });
+      const exercises = await makeExercises(id, 8, recentMistakes);
       const fresh = await topicRecord(id);
       const stamp = Date.now();
       fresh.queue.push(...exercises.map((ex, i) => ({ ...ex, id: `${id}#ai${stamp}-${i}` })));
