@@ -3,7 +3,7 @@ import { guessColumns, parseVocabFile } from "../lib/anki.js";
 import { checkVocab, mainForm } from "../lib/text.js";
 import { addCards, allCards, buildQueue, DECK_VERSION, grade, isPriority, previews, Rating, refreshDeckCards, State } from "../srs.js";
 import { addActivity, getSettings, setSetting, today } from "../store.js";
-import { h, loadJSON, mount, say, speakButton, toast } from "../ui.js";
+import { germanWord, h, loadJSON, mount, say, speakButton, toast } from "../ui.js";
 
 const SESSION_SIZE = 20;
 
@@ -187,7 +187,7 @@ async function review(root) {
     const front =
       direction === "production"
         ? h("div.flash-front", h("p.prompt-text", card.en), h("form", { onsubmit: (e) => (e.preventDefault(), reveal()) }, input))
-        : h("div.flash-front", h("p.prompt-text", { lang: "de" }, card.de, " ", speakButton(card.de, card.audio)));
+        : h("div.flash-front", h("p.prompt-text", { lang: "de" }, germanWord(card.de), " ", speakButton(card.de, card.audio)));
     const actions = h("div.actions",
       direction === "production" && h("button.btn.primary", { type: "button", onclick: () => reveal() }, "Check"),
       h("button.btn", { type: "button", onclick: () => reveal(true) }, direction === "production" ? "I don't know – show me" : "Show meaning"),
@@ -209,7 +209,7 @@ async function review(root) {
       );
       const answer = h("div.flash-back",
         direction === "production"
-          ? h("p.answer-text", { lang: "de" }, card.de, " ", speakButton(card.de, card.audio))
+          ? h("p.answer-text", { lang: "de" }, germanWord(card.de), " ", speakButton(card.de, card.audio))
           : h("p.answer-text", card.en),
         direction === "production" && card.plural && h("p.muted", { lang: "de" }, `Plural: die ${card.plural}`),
         direction === "recognition" && card.enNote && h("p.muted.small", card.enNote),
@@ -342,7 +342,7 @@ async function listPage(root) {
   function row(card) {
     const state = card.suspended ? "paused" : card.fsrs.state === State.New ? "new" : card.fsrs.due <= new Date() ? "due" : `next ${card.fsrs.due.toLocaleDateString()}`;
     const el = h("details.word",
-      h("summary", h("strong", { lang: "de" }, card.de), h("span", card.en), h("small.muted", state)),
+      h("summary", h("strong", { lang: "de" }, germanWord(card.de)), h("span", card.en), h("small.muted", state)),
       card.example && h("p.example", { lang: "de" }, card.example),
       cardDetails(card),
       h("div.row",

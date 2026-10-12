@@ -68,6 +68,18 @@ export function speak(text, rate = 0.95) {
   speechSynthesis.speak(u);
 }
 
+/**
+ * A German word with its gender colour-coded like the Goethe deck: der blue, die red, das green.
+ * "die Straße" → <span.g-die>die Straße</span>; "der/die Verwandte" colours each article.
+ */
+export function germanWord(de) {
+  const m = /^((?:der|die|das)(?:\/(?:der|die|das))*)\s+(.+)$/i.exec(String(de ?? ""));
+  if (!m) return document.createTextNode(String(de ?? ""));
+  const articles = m[1].toLowerCase().split("/");
+  if (articles.length === 1) return h(`span.g-${articles[0]}`, de);
+  return h("span", articles.flatMap((a, i) => [i ? "/" : "", h(`span.g-${a}`, a)]), " ", m[2]);
+}
+
 let player;
 /** Play a recorded clip (native speaker), falling back to text-to-speech if it can't load. */
 export function say(text, audioUrl) {

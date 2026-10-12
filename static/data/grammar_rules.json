@@ -1,0 +1,661 @@
+{
+  "word_order": {
+    "rule": [
+      "In a main clause the conjugated verb is always the 2nd element. Position 1 can be the subject, a time or place phrase, an object, or a whole subordinate clause.",
+      "If something other than the subject is in position 1, the subject moves to right after the verb: Morgen fahre ich …",
+      "W-questions: W-word + verb + subject (Wo wohnst du?). Yes/no questions: verb first (Wohnst du hier?).",
+      "Other verb parts (infinitive, participle, separable prefix) go to the very end – the 'sentence bracket': Ich habe gestern Pizza gegessen."
+    ],
+    "en": "English keeps subject–verb order even after a time phrase ('Tomorrow I go'), so German inversion ('Tomorrow go I') feels odd at first. English questions need 'do'; German just moves the verb: Wohnst du …? = Do you live …?",
+    "pt": "Portuguese word order is flexible and has no verb-second rule: 'Amanhã eu vou a Berna'. In German the verb must come right after 'Morgen': Morgen fahre ich. Portuguese questions often keep statement order with rising intonation ('Moras aqui?'); German puts the verb first: Wohnst du hier?",
+    "examples": [
+      { "de": "Morgen fahre ich nach Bern.", "en": "Tomorrow I'm going to Bern.", "pt": "Amanhã vou a Berna." },
+      { "de": "Wo wohnst du?", "en": "Where do you live?", "pt": "Onde moras?" },
+      { "de": "Hast du heute Zeit?", "en": "Do you have time today?", "pt": "Tens tempo hoje?" }
+    ]
+  },
+  "negation": {
+    "rule": [
+      "kein replaces ein or 'no article' before a noun: Ich habe ein Auto → Ich habe kein Auto. It takes the same endings as ein (keinen, keine, keinem) and also exists in the plural: keine Kinder.",
+      "nicht negates everything else: verbs, adjectives, adverbs, nouns with der/die/das or a possessive, names.",
+      "Position of nicht: at the end when it negates the whole sentence (Ich komme heute nicht), but before adjectives, prepositional phrases and the second verb part (Das ist nicht gut. Ich fahre nicht nach Genf. Ich kann nicht kommen.)."
+    ],
+    "en": "English 'no' vs 'not' is similar: I have no car = Ich habe kein Auto. But English needs 'do' (I don't understand) – German just adds nicht: Ich verstehe nicht.",
+    "pt": "Portuguese always puts 'não' before the verb ('Não tenho carro'). German splits this: nouns without a definite article take kein (Ich habe kein Auto = Não tenho carro), and nicht goes late in the sentence, not before the verb.",
+    "examples": [
+      { "de": "Ich habe keine Zeit.", "en": "I don't have time.", "pt": "Não tenho tempo." },
+      { "de": "Das ist nicht mein Handy.", "en": "That isn't my phone.", "pt": "Esse não é o meu telemóvel." },
+      { "de": "Wir fahren morgen nicht nach Genf.", "en": "We're not going to Geneva tomorrow.", "pt": "Amanhã não vamos a Genebra." }
+    ]
+  },
+  "modal_verbs": {
+    "rule": [
+      "Six modal verbs: können (can), müssen (must, have to), wollen (want), dürfen (may, be allowed), sollen (should, be supposed to), möchten (would like).",
+      "The singular changes the vowel, and ich = er/sie/es with no ending: ich kann, du kannst, er kann · ich muss, du musst, er muss · ich will, er will · ich darf, er darf · ich soll, er soll · ich möchte, er möchte.",
+      "The plural is regular: wir können, ihr könnt, sie können.",
+      "Sentence bracket: modal verb in position 2, the other verb as an infinitive at the very end, without 'zu': Ich muss heute arbeiten.",
+      "Trap: nicht müssen = don't have to · nicht dürfen = must not."
+    ],
+    "en": "Like English can/must + bare verb, but the infinitive moves to the end: 'I must work today' → Ich muss heute arbeiten. 'Must not' = nicht dürfen, 'don't have to' = nicht müssen – the same trap as in English.",
+    "pt": "Like poder/ter de/querer + infinitivo ('Tenho de trabalhar hoje'), but in German the infinitive goes to the end: Ich muss heute arbeiten. 'Não tens de vir' = Du musst nicht kommen · 'Não podes fumar aqui' = Du darfst hier nicht rauchen.",
+    "examples": [
+      { "de": "Ich kann heute nicht kommen.", "en": "I can't come today.", "pt": "Hoje não posso vir." },
+      { "de": "Du musst mehr Wasser trinken.", "en": "You have to drink more water.", "pt": "Tens de beber mais água." },
+      { "de": "Hier darf man nicht rauchen.", "en": "You're not allowed to smoke here.", "pt": "Aqui não se pode fumar." }
+    ]
+  },
+  "separable_verbs": {
+    "rule": [
+      "Many verbs have a stressed prefix that splits off: anrufen, aufstehen, einkaufen, mitkommen, fernsehen, abfahren, zumachen (an-, auf-, ein-, mit-, ab-, zu-, aus-, zurück- …).",
+      "Main clause in the present or Präteritum: verb in position 2, prefix at the very end: Ich rufe dich morgen an.",
+      "With a modal verb, or in a subordinate clause, the verb stays in one piece at the end: Ich muss dich anrufen · …, weil ich früh aufstehe.",
+      "Perfekt: ge- goes between prefix and verb (angerufen, aufgestanden). zu-infinitive: anzurufen.",
+      "Inseparable prefixes (be-, ver-, er-, ent-, emp-, ge-, miss-, zer-) never split and take no ge-: verstehen → verstanden."
+    ],
+    "en": "Similar to English phrasal verbs (call up, get up, come along), where the particle can move to the end: 'I'll call you up' → Ich rufe dich an. German always sends it to the end of the clause, however long the clause is.",
+    "pt": "Portuguese has nothing like this – 'telefonar' and 'levantar-se' are single words. Think of the prefix as a piece you must 'park' at the end: Levanto-me às 6 → Ich stehe um 6 Uhr auf.",
+    "examples": [
+      { "de": "Ich rufe dich später an.", "en": "I'll call you later.", "pt": "Ligo-te mais tarde." },
+      { "de": "Der Zug fährt um 9 Uhr ab.", "en": "The train leaves at 9.", "pt": "O comboio parte às 9." },
+      { "de": "Kommst du mit ins Kino?", "en": "Are you coming to the cinema with us?", "pt": "Vens connosco ao cinema?" }
+    ]
+  },
+  "imperative": {
+    "rule": [
+      "du: the verb stem, no -st, no pronoun: Komm! Mach! Geh! Verbs with e → i/ie keep it: Gib! Nimm! Lies! Sprich! Iss! Verbs with a → ä lose the umlaut: Fahr! Schlaf!",
+      "ihr: the normal ihr-form without 'ihr': Kommt! Macht! Wartet!",
+      "Sie: infinitive + Sie: Kommen Sie! Warten Sie bitte!",
+      "sein is irregular: Sei! · Seid! · Seien Sie!",
+      "Separable prefixes go to the end: Ruf mich an! Mach das Licht aus!",
+      "bitte, doch and mal make it softer: Komm doch mit! Hilf mir mal!"
+    ],
+    "en": "English has one imperative for everyone ('Come!'). German has three, depending on who you're talking to: du (one friend), ihr (several friends), Sie (formal).",
+    "pt": "Very close to Portuguese: du ≈ tu ('Vem!' = Komm!), ihr ≈ vocês ('Venham!' = Kommt!), Sie ≈ o senhor / a senhora ('Venha!' = Kommen Sie!).",
+    "examples": [
+      { "de": "Komm bitte pünktlich!", "en": "Please come on time!", "pt": "Vem a horas, por favor!" },
+      { "de": "Gib mir bitte das Salz!", "en": "Pass me the salt, please!", "pt": "Passa-me o sal, por favor!" },
+      { "de": "Nehmen Sie bitte Platz!", "en": "Please take a seat!", "pt": "Sente-se, por favor!" }
+    ]
+  },
+  "accusative": {
+    "rule": [
+      "The accusative marks the direct object – who or what is affected: Ich sehe den Mann.",
+      "Only the masculine changes: der → den, ein → einen, kein/mein → keinen/meinen. Feminine (die/eine), neuter (das/ein) and plural (die) look like the nominative.",
+      "Pronouns: ich → mich, du → dich, er → ihn, sie → sie, es → es, wir → uns, ihr → euch, Sie → Sie.",
+      "Always accusative after: durch, für, gegen, ohne, um.",
+      "Also after 'es gibt': Es gibt einen Supermarkt."
+    ],
+    "en": "English shows this only in pronouns: he → him, she → her, they → them (Ich sehe ihn = I see him). German also marks it on masculine articles: der Mann → den Mann.",
+    "pt": "Like the Portuguese object pronouns o/a/os/as: 'Vejo-o' = Ich sehe ihn. Portuguese articles don't change, but German masculine ones do: o homem → den Mann when it's the object.",
+    "examples": [
+      { "de": "Ich brauche einen neuen Laptop.", "en": "I need a new laptop.", "pt": "Preciso de um portátil novo." },
+      { "de": "Siehst du den Mann dort?", "en": "Do you see the man over there?", "pt": "Vês aquele homem ali?" },
+      { "de": "Das Geschenk ist für dich.", "en": "The present is for you.", "pt": "O presente é para ti." }
+    ]
+  },
+  "dative_basics": {
+    "rule": [
+      "Dative articles: der/das → dem, die → der, plural die → den (+ -n on the noun: den Kindern). ein → einem/einer · mein → meinem/meiner/meinen.",
+      "Pronouns: mir, dir, ihm, ihr, ihm, uns, euch, ihnen/Ihnen.",
+      "Always dative after: aus, bei, mit, nach, seit, von, zu. Contractions: zum (zu dem), zur (zu der), beim (bei dem), vom (von dem).",
+      "The dative is also the 'to whom' person: Ich gebe dem Kind das Buch (see 'Verben mit Dativ')."
+    ],
+    "en": "The dative often matches English 'with / to / from someone': mit mir = with me, von ihm = from him. English articles don't change; German ones do: mit dem Bus, mit der Bahn.",
+    "pt": "Compare the Portuguese contractions ao, à, do, da, no, na – German zum/zur/vom/beim work the same way: zur Post ≈ aos correios, vom Arzt ≈ do médico. The pronouns are like me/te/lhe: mir ≈ me / a mim, ihm ≈ lhe / a ele.",
+    "examples": [
+      { "de": "Ich fahre mit dem Zug.", "en": "I'm going by train.", "pt": "Vou de comboio." },
+      { "de": "Sie wohnt bei ihren Eltern.", "en": "She lives with her parents.", "pt": "Ela mora com os pais." },
+      { "de": "Ich gehe zum Arzt.", "en": "I'm going to the doctor.", "pt": "Vou ao médico." }
+    ]
+  },
+  "possessives": {
+    "rule": [
+      "mein (my), dein (your – du), sein (his, its), ihr (her, their), unser (our), euer (your – ihr), Ihr (your – formal).",
+      "They take the same endings as ein/kein: mein Bruder, meine Schwester, mein Kind, meine Eltern · accusative masculine meinen · dative meinem/meiner/meinen.",
+      "sein vs. ihr depends on the OWNER: Anna und ihr Bruder · Tom und seine Schwester.",
+      "euer drops the e when it gets an ending: eure Wohnung."
+    ],
+    "en": "Same logic as English: his/her depends on the owner (Tom and his sister = Tom und seine Schwester). The difference: German adds endings for the gender and case of the thing owned (meinen Bruder).",
+    "pt": "Careful: in Portuguese 'o seu irmão' could be his or her. In German the word shows the owner – sein = dele, ihr = dela – and then the ending agrees with the thing, like in Portuguese: mein Bruder = o meu irmão, meine Schwester = a minha irmã.",
+    "examples": [
+      { "de": "Das ist mein Bruder.", "en": "That's my brother.", "pt": "Este é o meu irmão." },
+      { "de": "Anna ruft ihre Mutter an.", "en": "Anna calls her mother.", "pt": "A Anna liga à mãe dela." },
+      { "de": "Tom besucht seine Eltern.", "en": "Tom visits his parents.", "pt": "O Tom visita os pais dele." }
+    ]
+  },
+  "time_prepositions": {
+    "rule": [
+      "um + clock time: um 8 Uhr, um halb neun.",
+      "am + days, dates, parts of the day: am Montag, am 15. Mai, am Abend, am Wochenende (but: in der Nacht).",
+      "im + months and seasons: im August, im Winter. Years take no preposition (2024) or 'im Jahr 2024'.",
+      "von … bis (from … to), ab (from … on), seit + dative (since / for, still true now), vor + dative (ago, before), nach + dative (after)."
+    ],
+    "en": "English at/on/in: at 8 → um 8, on Monday → am Montag, in August → im August. 'I have been living here for two years' (still true) = Ich wohne seit zwei Jahren hier – with the PRESENT tense.",
+    "pt": "às 8 → um 8, na segunda-feira → am Montag, em agosto → im August. 'Moro aqui há dois anos' = Ich wohne seit zwei Jahren hier (present tense in both languages!). 'Há dois dias' (ago) = vor zwei Tagen.",
+    "examples": [
+      { "de": "Der Termin ist am Montag um 8 Uhr.", "en": "The appointment is on Monday at 8.", "pt": "A consulta é na segunda-feira às 8." },
+      { "de": "Ich wohne seit drei Jahren in Basel.", "en": "I've been living in Basel for three years.", "pt": "Moro em Basileia há três anos." },
+      { "de": "Er ist vor zwei Tagen angekommen.", "en": "He arrived two days ago.", "pt": "Ele chegou há dois dias." }
+    ]
+  },
+
+  "perfekt": {
+    "rule": [
+      "Perfekt = haben/sein (position 2) + Partizip II (at the end). It's the normal past tense in speech.",
+      "sein for movement from A to B (gehen, fahren, fliegen, kommen), change of state (aufstehen, werden, einschlafen, sterben), and sein, bleiben, passieren. Everything else takes haben.",
+      "Regular verbs: ge- + stem + -t (gemacht). Irregular: ge- + (changed) stem + -en (gegangen, geschrieben).",
+      "Separable verbs: ge- in the middle (eingekauft, angerufen). No ge- with inseparable prefixes (verstanden, bekommen) or -ieren verbs (studiert)."
+    ],
+    "en": "It looks like the English present perfect ('I have eaten') but it's used like the simple past: 'Gestern habe ich Pizza gegessen' = 'Yesterday I ate pizza'. And many verbs use sein where English uses 'have'.",
+    "pt": "In use it's the pretérito perfeito simples: 'Ontem comi pizza' = Gestern habe ich Pizza gegessen. Don't think of 'tenho comido' (that means repeated or ongoing). The form is like 'ter + particípio', but movement verbs use sein: Ich bin gefahren.",
+    "examples": [
+      { "de": "Gestern bin ich nach Luzern gefahren.", "en": "Yesterday I went to Lucerne.", "pt": "Ontem fui a Lucerna." },
+      { "de": "Wir haben Pizza gegessen.", "en": "We ate pizza.", "pt": "Comemos pizza." },
+      { "de": "Hast du die Aufgabe verstanden?", "en": "Did you understand the task?", "pt": "Percebeste o exercício?" }
+    ]
+  },
+  "praeteritum_basic": {
+    "rule": [
+      "sein, haben and the modal verbs are used in the Präteritum even in speech, instead of the Perfekt.",
+      "sein: ich war, du warst, er war, wir waren, ihr wart, sie waren.",
+      "haben: ich hatte, du hattest, er hatte, wir hatten, ihr hattet, sie hatten.",
+      "Modal verbs drop the umlaut and add -te: können → konnte, müssen → musste, dürfen → durfte, wollen → wollte, sollen → sollte (möchten → wollte).",
+      "ich and er have the same form (ich war, er war)."
+    ],
+    "en": "Like English was / had / could: Ich war krank = I was sick · ich konnte = I could. Germans say 'ich war' rather than 'ich bin gewesen' in conversation.",
+    "pt": "Covers both Portuguese past tenses: estava/estive = war, tinha/tive = hatte, podia/pude = konnte, tinha de = musste. German doesn't separate imperfeito and perfeito here.",
+    "examples": [
+      { "de": "Gestern war ich krank.", "en": "Yesterday I was sick.", "pt": "Ontem estive doente." },
+      { "de": "Wir hatten keine Zeit.", "en": "We didn't have time.", "pt": "Não tínhamos tempo." },
+      { "de": "Als Kind konnte ich nicht schwimmen.", "en": "As a child I couldn't swim.", "pt": "Em criança, não sabia nadar." }
+    ]
+  },
+  "dative_verbs": {
+    "rule": [
+      "Some verbs take a dative object (usually a person): helfen, danken, gefallen, gehören, schmecken, passen, stehen (to suit), gratulieren, antworten, wehtun, fehlen. Ich helfe dir.",
+      "With gefallen, schmecken and gehören the THING is the subject: Das Kleid gefällt mir (the dress pleases me).",
+      "Verbs with a person AND a thing (geben, schenken, zeigen, erklären, schicken, bringen): person in the dative, thing in the accusative: Ich gebe dem Kind ein Buch.",
+      "Order: dative noun before accusative noun – but an accusative PRONOUN comes before the dative: Ich gebe es ihm."
+    ],
+    "en": "The dative person is the English 'to someone': I give the book to him = Ich gebe ihm das Buch. 'I like the dress' goes backwards: Das Kleid gefällt mir (the dress is pleasing to me). 'Help' takes the dative: ihm helfen.",
+    "pt": "Very like Portuguese indirect objects: 'Dou-lhe o livro' = Ich gebe ihm das Buch · 'O vestido agrada-me' = Das Kleid gefällt mir. The 'lhe' is your signal for the dative. But 'ajudar alguém' (direct object in Portuguese) = jemandem helfen (dative in German).",
+    "examples": [
+      { "de": "Kannst du mir helfen?", "en": "Can you help me?", "pt": "Podes ajudar-me?" },
+      { "de": "Das Kleid gefällt ihr sehr.", "en": "She really likes the dress.", "pt": "Ela gosta muito do vestido." },
+      { "de": "Ich schenke meinem Bruder ein Buch.", "en": "I'm giving my brother a book.", "pt": "Vou oferecer um livro ao meu irmão." }
+    ]
+  },
+  "two_way_prepositions": {
+    "rule": [
+      "in, an, auf, über, unter, vor, hinter, neben, zwischen can take two cases.",
+      "Wo? (location, staying in one place) → dative: Das Buch liegt auf dem Tisch.",
+      "Wohin? (direction, moving to a place) → accusative: Ich lege das Buch auf den Tisch.",
+      "Verb pairs: legen → liegen (lay / lie), stellen → stehen (put upright / stand), setzen → sitzen (sit down / sit), hängen for both. The 'putting' verbs take the accusative, the 'being there' verbs the dative.",
+      "Contractions: ins (in das), im (in dem), ans, am, aufs."
+    ],
+    "en": "English separates 'in' and 'into', 'on' and 'onto': in the kitchen = in der Küche · into the kitchen = in die Küche. The German case does the job of 'into / onto'.",
+    "pt": "Portuguese uses 'em' for location and 'a / para' for direction ('estou no cinema' / 'vou ao cinema'). German keeps the same preposition and changes the case: im Kino (no cinema) vs. ins Kino (ao cinema). Portuguese 'pôr' splits into legen / stellen / setzen depending on the position.",
+    "examples": [
+      { "de": "Das Buch liegt auf dem Tisch.", "en": "The book is on the table.", "pt": "O livro está em cima da mesa." },
+      { "de": "Ich lege das Buch auf den Tisch.", "en": "I put the book on the table.", "pt": "Ponho o livro em cima da mesa." },
+      { "de": "Wir gehen heute ins Kino.", "en": "We're going to the cinema today.", "pt": "Hoje vamos ao cinema." }
+    ]
+  },
+  "reflexive_verbs": {
+    "rule": [
+      "Reflexive verbs come with a pronoun that refers back to the subject: sich freuen, sich treffen, sich beeilen, sich fühlen, sich anziehen, sich erholen.",
+      "Accusative: mich, dich, sich, uns, euch, sich – Ich freue mich.",
+      "If the sentence has another object (often a body part or clothes), the reflexive pronoun is dative: mir, dir, sich, uns, euch, sich – Ich wasche mir die Hände.",
+      "Only ich and du differ between accusative and dative (mich/mir, dich/dir).",
+      "Perfekt with haben: Ich habe mich verspätet."
+    ],
+    "en": "English uses '-self' much less: Ich freue mich = I'm happy / looking forward · Wir treffen uns = we meet. Body parts: English says 'I wash my hands', German 'I wash to-me the hands': Ich wasche mir die Hände.",
+    "pt": "Very close to Portuguese reflexive verbs: lavar-se = sich waschen, sentir-se = sich fühlen, encontrar-se = sich treffen. Pronouns: me = mich/mir, te = dich/dir, se = sich, nos = uns. 'Lavo as mãos' → German adds the dative: Ich wasche mir die Hände.",
+    "examples": [
+      { "de": "Ich freue mich auf das Wochenende.", "en": "I'm looking forward to the weekend.", "pt": "Mal posso esperar pelo fim de semana." },
+      { "de": "Wir treffen uns um 7 Uhr.", "en": "We're meeting at 7.", "pt": "Encontramo-nos às 7." },
+      { "de": "Ich wasche mir die Hände.", "en": "I wash my hands.", "pt": "Lavo as mãos." }
+    ]
+  },
+  "comparison": {
+    "rule": [
+      "Comparative: adjective + -er, with als: schneller als. Short adjectives often add an umlaut: alt → älter, groß → größer, jung → jünger, kalt → kälter.",
+      "Equality: so … wie: so alt wie.",
+      "Superlative: am …-sten (am schnellsten); after -t, -d, -s, -ß, -z: -esten (am ältesten) – except groß → am größten.",
+      "Before a noun they take adjective endings: der größte Berg, ein schnelleres Auto.",
+      "Irregular: gut – besser – am besten · viel – mehr – am meisten · gern – lieber – am liebsten · hoch – höher – am höchsten."
+    ],
+    "en": "Like English short adjectives (fast – faster – fastest), but German does it with ALL adjectives – never 'more' + adjective: interessanter = more interesting. 'than' = als, 'as … as' = so … wie.",
+    "pt": "Portuguese uses 'mais … do que' and 'o mais …'; German just adds endings: mais rápido do que = schneller als · o mais rápido = am schnellsten. The irregulars match: melhor = besser, mais = mehr. 'Tão … como' = so … wie.",
+    "examples": [
+      { "de": "Zürich ist größer als Bern.", "en": "Zurich is bigger than Bern.", "pt": "Zurique é maior do que Berna." },
+      { "de": "Mein Bruder ist so alt wie ich.", "en": "My brother is as old as me.", "pt": "O meu irmão tem a mesma idade que eu." },
+      { "de": "Ich trinke lieber Tee als Kaffee.", "en": "I prefer tea to coffee.", "pt": "Prefiro chá a café." }
+    ]
+  },
+  "subordinate_word_order": {
+    "rule": [
+      "Subordinate clauses start with a conjunction (weil, dass, wenn, ob, obwohl …) and the conjugated verb goes to the END.",
+      "Separable verbs join back together: …, weil ich früh aufstehe.",
+      "With two verbs, the conjugated one comes last: …, dass ich arbeiten muss · …, weil ich gut geschlafen habe.",
+      "A comma always separates the subordinate clause.",
+      "If the subordinate clause comes first, it counts as position 1, so the main clause starts with the verb: Wenn es regnet, bleibe ich zu Hause.",
+      "weil (verb at the end) vs. denn (normal order): …, denn ich bin krank."
+    ],
+    "en": "English keeps the same order in both kinds of clause ('because I am sick'); German sends the verb to the end: weil ich krank bin = 'because I sick am'.",
+    "pt": "Portuguese also keeps normal order after 'porque / que / se'. In German, feel the clause 'closing' with the verb: porque estou doente → weil ich krank bin.",
+    "examples": [
+      { "de": "Ich komme nicht, weil ich krank bin.", "en": "I'm not coming because I'm sick.", "pt": "Não vou porque estou doente." },
+      { "de": "Ich glaube, dass er heute arbeiten muss.", "en": "I think he has to work today.", "pt": "Acho que ele hoje tem de trabalhar." },
+      { "de": "Wenn das Wetter gut ist, gehen wir an den See.", "en": "If the weather is nice, we'll go to the lake.", "pt": "Se estiver bom tempo, vamos ao lago." }
+    ]
+  },
+  "adjective_endings": {
+    "rule": [
+      "After the noun (Der Rock ist schwarz) an adjective has no ending. Before a noun it always has one.",
+      "After der/die/das (and dieser, jeder): -e in the nominative singular (der neue, die neue, das neue) and in the feminine/neuter accusative; -en everywhere else (den neuen Kollegen, dem neuen, die neuen Schuhe).",
+      "After ein/kein/mein: the adjective shows the gender where the article can't: ein neuer Kollege (m., nominative), ein neues Auto (n.), eine neue Idee; elsewhere -en like after der.",
+      "No article: the adjective takes the article's ending: frischer Kaffee (der), frische Milch (die), frisches Brot (das), mit frischem Brot (dem), nette Leute (plural).",
+      "Rule of thumb: the gender/case signal must appear once – on the article or on the adjective."
+    ],
+    "en": "English adjectives never change (a new car, the new car). German adjectives carry the gender and case when the article doesn't: ein neuer Wagen vs. der neue Wagen.",
+    "pt": "Like Portuguese agreement (novo/nova/novos/novas), German adjectives agree with the noun – but also with the case and the article before them. Good news: -en is by far the most frequent ending.",
+    "examples": [
+      { "de": "Der neue Kollege heißt Marco.", "en": "The new colleague is called Marco.", "pt": "O novo colega chama-se Marco." },
+      { "de": "Ich suche einen guten Job.", "en": "I'm looking for a good job.", "pt": "Procuro um bom emprego." },
+      { "de": "Ich trinke gern grünen Tee.", "en": "I like drinking green tea.", "pt": "Gosto de beber chá verde." }
+    ]
+  },
+
+  "local_prepositions": {
+    "rule": [
+      "Wohin? nach + cities and countries without an article (nach Genf, nach Portugal) and nach Hause · in + countries with an article and buildings (in die Schweiz, ins Kino) · zu + people, shops and places (zu meiner Freundin, zum Arzt, zur Post).",
+      "Wo? in + dative (in der Schweiz, im Kino) · bei + people and companies (bei meinen Eltern, beim Arzt) · zu Hause.",
+      "Woher? aus + countries, cities, buildings (aus Portugal, aus dem Haus) · von + people and places you've been (vom Arzt, von der Arbeit).",
+      "Pattern: zu → bei → von (to the doctor, at the doctor's, from the doctor) · nach/in → in → aus (to Lisbon, in Lisbon, from Lisbon)."
+    ],
+    "en": "English 'to' splits into nach/in/zu, 'at' into in/bei, 'from' into aus/von. 'At the doctor's' = beim Arzt · 'at home' = zu Hause · 'home' (direction) = nach Hause.",
+    "pt": "'Ir a/para' = nach/in/zu · 'estar em' = in/bei · 'vir de' = aus/von. 'Vou para casa' = Ich gehe nach Hause · 'estou em casa' = Ich bin zu Hause · 'em casa dos meus pais' = bei meinen Eltern.",
+    "examples": [
+      { "de": "Ich fahre morgen nach Genf.", "en": "I'm going to Geneva tomorrow.", "pt": "Amanhã vou a Genebra." },
+      { "de": "Er ist gerade beim Arzt.", "en": "He's at the doctor's right now.", "pt": "Ele está no médico neste momento." },
+      { "de": "Ich komme aus Portugal.", "en": "I'm from Portugal.", "pt": "Sou de Portugal." }
+    ]
+  },
+  "connectors_inversion": {
+    "rule": [
+      "Position-0 connectors don't change the word order: und, aber, oder, denn, sondern. …, aber ich muss arbeiten.",
+      "Adverb connectors take position 1, so the verb comes straight after and the subject follows: deshalb, deswegen, darum (that's why), trotzdem (anyway), sonst (otherwise), dann, danach, außerdem. …, deshalb bleibe ich zu Hause.",
+      "They join two main clauses (verb stays in position 2) – unlike weil/obwohl, which send the verb to the end."
+    ],
+    "en": "English 'so', 'still', 'otherwise' don't affect word order; German connectors do: 'so I'm staying home' → deshalb bleibe ich zu Hause ('so stay I at home').",
+    "pt": "Portuguese 'por isso', 'mesmo assim', 'senão' don't change the order: 'Estou doente, por isso fico em casa' → Ich bin krank, deshalb bleibe ich zu Hause. In German the verb jumps right after deshalb.",
+    "examples": [
+      { "de": "Ich bin krank, deshalb bleibe ich zu Hause.", "en": "I'm sick, so I'm staying home.", "pt": "Estou doente, por isso fico em casa." },
+      { "de": "Es regnet, trotzdem gehen wir spazieren.", "en": "It's raining, but we're going for a walk anyway.", "pt": "Está a chover, mas mesmo assim vamos passear." },
+      { "de": "Beeil dich, sonst verpassen wir den Zug!", "en": "Hurry up, otherwise we'll miss the train!", "pt": "Despacha-te, senão perdemos o comboio!" }
+    ]
+  },
+  "indirect_questions": {
+    "rule": [
+      "An indirect question sits inside another sentence: Weißt du …? Können Sie mir sagen …? Ich frage mich …",
+      "W-questions keep the W-word as the connector: Wo ist der Bahnhof? → Können Sie mir sagen, wo der Bahnhof ist?",
+      "Yes/no questions get ob (whether, if): Kommt er? → Ich weiß nicht, ob er kommt.",
+      "The conjugated verb goes to the end.",
+      "Great for sounding polite: Können Sie mir sagen, wann der Zug fährt?"
+    ],
+    "en": "English reorders the same way: 'Where is the station?' → 'Can you tell me where the station is?'. 'If / whether' here = ob, never wenn.",
+    "pt": "Like 'Pode dizer-me onde fica a estação?', and 'se' for yes/no: 'Não sei se ele vem' = Ich weiß nicht, ob er kommt. Careful: this Portuguese 'se' = ob, not wenn.",
+    "examples": [
+      { "de": "Können Sie mir sagen, wo der Bahnhof ist?", "en": "Can you tell me where the station is?", "pt": "Pode dizer-me onde fica a estação?" },
+      { "de": "Ich weiß nicht, ob er heute kommt.", "en": "I don't know if he's coming today.", "pt": "Não sei se ele vem hoje." },
+      { "de": "Weißt du, wann der Film anfängt?", "en": "Do you know when the film starts?", "pt": "Sabes a que horas começa o filme?" }
+    ]
+  },
+  "k2_polite": {
+    "rule": [
+      "Konjunktiv II makes you sound polite, gives advice and expresses wishes.",
+      "Polite requests: Könnten Sie …? Würden Sie …? Hätten Sie …? Ordering: Ich hätte gern …",
+      "Advice: Du solltest … · An deiner Stelle würde ich …",
+      "Wishes: Ich würde gern + infinitive · Ich wäre gern … · Ich hätte gern …",
+      "Forms: hätte, wäre, würde, könnte, sollte (du hättest, wir hätten, ihr hättet)."
+    ],
+    "en": "Same idea as English 'could you…?', 'you should…', 'I'd like…': Könnten Sie = Could you · Du solltest = You should · Ich würde gern = I'd like to · Ich hätte gern = I'd like (to have).",
+    "pt": "This is the Portuguese condicional – and in Portugal often the imperfeito: 'Podia ajudar-me?' = Könnten Sie mir helfen? · 'Devias dormir mais' = Du solltest mehr schlafen · 'Gostava de viajar' = Ich würde gern reisen · 'Queria um café' = Ich hätte gern einen Kaffee.",
+    "examples": [
+      { "de": "Könnten Sie mir bitte helfen?", "en": "Could you help me, please?", "pt": "Podia ajudar-me, por favor?" },
+      { "de": "Du solltest mehr schlafen.", "en": "You should sleep more.", "pt": "Devias dormir mais." },
+      { "de": "Ich hätte gern ein Glas Wasser.", "en": "I'd like a glass of water.", "pt": "Queria um copo de água." }
+    ]
+  },
+  "passive_present": {
+    "rule": [
+      "The passive focuses on the action, not on who does it: werden (position 2) + Partizip II (end).",
+      "Das Auto wird repariert. Die Briefe werden gebracht.",
+      "The active object becomes the subject: Der Mechaniker repariert das Auto → Das Auto wird (vom Mechaniker) repariert.",
+      "Who does it (optional): von + dative.",
+      "man-sentences are often a passive in disguise: Man spricht hier Deutsch = Hier wird Deutsch gesprochen. Without a subject: Hier wird nicht geraucht."
+    ],
+    "en": "Like English 'be + past participle': The car is being repaired = Das Auto wird repariert. German uses werden (not sein) for the process; 'by' = von.",
+    "pt": "Like Portuguese 'ser + particípio' (O carro é reparado) or the 'se' passive ('Aqui fala-se alemão' = Hier wird Deutsch gesprochen). German uses werden where Portuguese uses ser.",
+    "examples": [
+      { "de": "Das Auto wird gerade repariert.", "en": "The car is being repaired right now.", "pt": "O carro está a ser reparado neste momento." },
+      { "de": "In der Schweiz werden vier Sprachen gesprochen.", "en": "Four languages are spoken in Switzerland.", "pt": "Na Suíça falam-se quatro línguas." },
+      { "de": "Hier wird nicht geraucht.", "en": "No smoking here.", "pt": "Aqui não se fuma." }
+    ]
+  },
+  "relative_basic": {
+    "rule": [
+      "A relative clause describes a noun: der Mann, der neben mir wohnt.",
+      "The relative pronoun looks like der/die/das. Its gender and number come from the noun it describes; its case comes from its job inside the relative clause.",
+      "Nominative (subject of the clause): der, die, das, plural die – der Mann, der dort steht.",
+      "Accusative (object): den, die, das, plural die – der Film, den ich gesehen habe.",
+      "Comma before it, verb at the end."
+    ],
+    "en": "English 'who / which / that' never changes ('the film that I saw'). German must choose the right form: der Film, den ich gesehen habe. And you can never drop it ('the film I saw').",
+    "pt": "Portuguese 'que' covers everything ('o filme que vi'). The German 'que' changes with gender and case: der / den / die / das. Ask yourself: masculine? Subject or object in the small clause?",
+    "examples": [
+      { "de": "Das ist der Mann, der neben mir wohnt.", "en": "That's the man who lives next to me.", "pt": "Este é o homem que mora ao meu lado." },
+      { "de": "Das ist der Film, den ich gestern gesehen habe.", "en": "That's the film I saw yesterday.", "pt": "Este é o filme que vi ontem." },
+      { "de": "Die Leute, die hier arbeiten, sind sehr nett.", "en": "The people who work here are very nice.", "pt": "As pessoas que trabalham aqui são muito simpáticas." }
+    ]
+  },
+  "als_wenn": {
+    "rule": [
+      "als = when, for ONE event or ONE period in the past: Als ich ein Kind war … · Als ich in Zürich ankam …",
+      "wenn = when / whenever for repeated events (past, present, future), and also 'if': Immer wenn ich Zeit hatte … · Wenn ich nach Hause komme …",
+      "wann = the question word 'at what time?', also in indirect questions: Ich weiß nicht, wann er kommt.",
+      "All three send the verb to the end."
+    ],
+    "en": "English 'when' covers all three. Ask: one-time past → als · repeated or future → wenn · a question → wann.",
+    "pt": "Portuguese 'quando' also covers all three. 'Quando (uma vez, no passado)' = als · 'sempre que' / 'quando' + futuro = wenn · 'quando?' / 'a que horas?' (pergunta) = wann.",
+    "examples": [
+      { "de": "Als ich ein Kind war, hatte ich einen Hund.", "en": "When I was a child, I had a dog.", "pt": "Quando era criança, tinha um cão." },
+      { "de": "Immer wenn ich nach Hause kam, war meine Mutter in der Küche.", "en": "Whenever I came home, my mother was in the kitchen.", "pt": "Sempre que chegava a casa, a minha mãe estava na cozinha." },
+      { "de": "Wenn ich morgen Zeit habe, rufe ich dich an.", "en": "When I have time tomorrow, I'll call you.", "pt": "Quando tiver tempo amanhã, ligo-te." }
+    ]
+  },
+
+  "praeteritum": {
+    "rule": [
+      "The Präteritum is the written and storytelling past (books, news). In speech Germans prefer the Perfekt – except for sein, haben, the modal verbs and a few others.",
+      "Regular verbs: stem + -te + ending: ich machte, du machtest, er machte, wir machten, ihr machtet, sie machten (after -t/-d: arbeitete).",
+      "Irregular verbs change the vowel and have no -te: gehen → ging, kommen → kam, sehen → sah, geben → gab, nehmen → nahm, finden → fand, bleiben → blieb, sprechen → sprach, fahren → fuhr, schreiben → schrieb.",
+      "Mixed verbs change the vowel AND add -te: denken → dachte, bringen → brachte, wissen → wusste, kennen → kannte.",
+      "ich and er are the same (ich ging, er ging). Separable prefixes go to the end (rief … an)."
+    ],
+    "en": "Like the English simple past: went (ging), came (kam), worked (arbeitete). English uses it everywhere; German mostly in writing – in conversation 'ich bin gegangen' sounds more natural.",
+    "pt": "Covers both the pretérito perfeito and the imperfeito: 'fui / ia' = ging · 'trabalhei / trabalhava' = arbeitete. German doesn't mark the difference – context does.",
+    "examples": [
+      { "de": "Er kam um 7 Uhr nach Hause.", "en": "He came home at 7.", "pt": "Ele chegou a casa às 7." },
+      { "de": "Wir trafen uns im Park.", "en": "We met in the park.", "pt": "Encontrámo-nos no parque." },
+      { "de": "Ich wusste nicht, dass du hier bist.", "en": "I didn't know you were here.", "pt": "Não sabia que estavas aqui." }
+    ]
+  },
+  "temporal_clauses": {
+    "rule": [
+      "Plusquamperfekt = hatte/war + Partizip II: something that happened BEFORE another past event (ich hatte gegessen, ich war gegangen).",
+      "nachdem (after): the nachdem-clause is one step further back in time: Nachdem ich gegessen hatte, ging ich spazieren. (Present: Nachdem ich gegessen habe, gehe ich spazieren.)",
+      "bevor (before), während (while), seit/seitdem (since – still true now, so present tense), bis (until), sobald (as soon as).",
+      "All are subordinate clauses: verb at the end. If the clause comes first, the main clause starts with the verb."
+    ],
+    "en": "Plusquamperfekt = past perfect: 'After I had eaten, I went for a walk' = Nachdem ich gegessen hatte, ging ich spazieren. The others: before, while, since, until, as soon as.",
+    "pt": "Plusquamperfekt = pretérito mais-que-perfeito composto: 'tinha comido' = hatte gegessen · 'tinha ido' = war gegangen. nachdem = depois de / depois que · bevor = antes de / antes que · während = enquanto · seit = desde que · bis = até (que) · sobald = assim que.",
+    "examples": [
+      { "de": "Nachdem ich gegessen hatte, ging ich spazieren.", "en": "After I had eaten, I went for a walk.", "pt": "Depois de ter comido, fui passear." },
+      { "de": "Bevor ich ins Bett gehe, lese ich noch ein bisschen.", "en": "Before I go to bed, I read a little.", "pt": "Antes de ir para a cama, ainda leio um bocadinho." },
+      { "de": "Seit ich in Zürich wohne, fahre ich mehr Velo.", "en": "Since I've been living in Zurich, I cycle more.", "pt": "Desde que moro em Zurique, ando mais de bicicleta." }
+    ]
+  },
+  "concessive": {
+    "rule": [
+      "obwohl (although) starts a subordinate clause, verb at the end: Obwohl es regnet, gehen wir joggen.",
+      "trotzdem (anyway, nevertheless) is an adverb in a main clause – in position 1 (verb next) or later: Es regnet. Trotzdem gehen wir joggen. / Wir gehen trotzdem joggen.",
+      "trotz + genitive (despite + noun): trotz des Regens.",
+      "Same meaning, three structures: obwohl + clause · trotzdem + main clause · trotz + noun."
+    ],
+    "en": "obwohl = although · trotzdem = anyway, still, nevertheless · trotz = despite, in spite of.",
+    "pt": "obwohl = embora / apesar de (embora esteja a chover …) · trotzdem = mesmo assim · trotz = apesar de + nome (apesar da chuva). Portuguese 'embora' takes the conjuntivo; German obwohl just sends the verb to the end.",
+    "examples": [
+      { "de": "Obwohl es regnet, gehen wir joggen.", "en": "Although it's raining, we're going jogging.", "pt": "Embora esteja a chover, vamos correr." },
+      { "de": "Es regnet. Trotzdem gehen wir joggen.", "en": "It's raining. We're going jogging anyway.", "pt": "Está a chover. Mesmo assim, vamos correr." },
+      { "de": "Trotz des Regens sind wir gewandert.", "en": "Despite the rain, we went hiking.", "pt": "Apesar da chuva, fomos fazer uma caminhada." }
+    ]
+  },
+  "infinitive_zu": {
+    "rule": [
+      "After many verbs and expressions, a second action follows as zu + infinitive at the end: Ich habe vergessen, dich anzurufen.",
+      "Typical triggers: versuchen, vergessen, anfangen, aufhören, vorhaben, beschließen, bitten · Lust / Zeit / Angst haben · es ist wichtig / schwer / schön · es macht Spaß.",
+      "Separable verbs: zu goes inside: anzurufen, einzukaufen, mitzukommen.",
+      "NO zu after modal verbs, werden, lassen, and after gehen/lernen/sehen/hören + infinitive: Ich kann kommen. Ich gehe schwimmen.",
+      "Usually separated by a comma."
+    ],
+    "en": "Like English 'to + verb': I forgot to call you = Ich habe vergessen, dich anzurufen. But the infinitive goes to the very end, after its objects.",
+    "pt": "Like Portuguese 'de / a + infinitivo': 'Esqueci-me de te ligar' = Ich habe vergessen, dich anzurufen · 'Comecei a aprender' = Ich habe angefangen zu lernen · 'É importante beber água' = Es ist wichtig, Wasser zu trinken.",
+    "examples": [
+      { "de": "Ich habe vergessen, dich anzurufen.", "en": "I forgot to call you.", "pt": "Esqueci-me de te ligar." },
+      { "de": "Es ist wichtig, genug Wasser zu trinken.", "en": "It's important to drink enough water.", "pt": "É importante beber água suficiente." },
+      { "de": "Hast du Lust, ins Kino zu gehen?", "en": "Do you feel like going to the cinema?", "pt": "Apetece-te ir ao cinema?" }
+    ]
+  },
+  "purpose": {
+    "rule": [
+      "um … zu + infinitive = (in order) to, when both parts have the same subject: Ich lerne Deutsch, um in der Schweiz zu arbeiten.",
+      "damit + clause (verb at the end) = so that – needed when the subjects are different: Ich erkläre es, damit du es verstehst.",
+      "ohne … zu / ohne dass = without doing: Er ging, ohne etwas zu sagen.",
+      "statt … zu / statt dass = instead of doing: Statt zu lernen, sieht er fern.",
+      "Modal verbs (wollen, können) disappear in um-zu clauses: Ich will Geld sparen → …, um Geld zu sparen."
+    ],
+    "en": "um … zu = (in order) to · damit = so that · ohne … zu = without …-ing · statt … zu = instead of …-ing.",
+    "pt": "um … zu = para + infinitivo (para trabalhar) · damit = para que + conjuntivo (para que percebas) · ohne … zu = sem + infinitivo (sem dizer nada) · statt … zu = em vez de + infinitivo. Same logic as Portuguese: different subjects → damit (para que).",
+    "examples": [
+      { "de": "Ich lerne Deutsch, um in der Schweiz zu arbeiten.", "en": "I'm learning German to work in Switzerland.", "pt": "Aprendo alemão para trabalhar na Suíça." },
+      { "de": "Ich erkläre es dir noch einmal, damit du es verstehst.", "en": "I'll explain it to you again so that you understand it.", "pt": "Explico-te outra vez para que percebas." },
+      { "de": "Sie ist gegangen, ohne etwas zu sagen.", "en": "She left without saying anything.", "pt": "Ela foi-se embora sem dizer nada." }
+    ]
+  },
+  "verbs_prepositions": {
+    "rule": [
+      "Many verbs need a fixed preposition with a fixed case – learn them as a block: warten auf + Akk · sich freuen auf + Akk (future) / über + Akk (now or past) · denken an + Akk · sich erinnern an + Akk · sich interessieren für · sich kümmern um · sprechen über · Angst haben vor + Dat · teilnehmen an + Dat · abhängen von · sich bedanken für.",
+      "Referring back to a THING: da(r) + preposition: darauf, daran, darüber, damit (Ich freue mich darauf).",
+      "Asking about a THING: wo(r) + preposition: Worauf wartest du? Woran denkst du?",
+      "For PEOPLE use the preposition + pronoun or wen/wem: Auf wen wartest du? Ich warte auf ihn.",
+      "An r is added before a vowel: darauf, worüber."
+    ],
+    "en": "English also has verb + preposition (wait for, think of, look forward to), but they rarely match: warten AUF, denken AN, Angst VOR. darauf ≈ 'for it / about it' · worauf ≈ 'what … for?'.",
+    "pt": "Portuguese has fixed prepositions too (pensar em, esperar por, ter medo de, interessar-se por) – and they don't match German either: pensar em = denken an, esperar por = warten auf, ter medo de = Angst haben vor. 'Penso nisso' = Ich denke daran · 'Em que pensas?' = Woran denkst du?",
+    "examples": [
+      { "de": "Wir warten auf den Bus.", "en": "We're waiting for the bus.", "pt": "Estamos à espera do autocarro." },
+      { "de": "Ich denke oft an meine Familie.", "en": "I often think of my family.", "pt": "Penso muitas vezes na minha família." },
+      { "de": "Worüber hast du dich gefreut? – Über dein Geschenk.", "en": "What were you happy about? – Your present.", "pt": "Com o que é que ficaste contente? – Com o teu presente." }
+    ]
+  },
+  "n_declension": {
+    "rule": [
+      "A group of masculine nouns adds -n/-en in EVERY case except the nominative singular: der Kollege → den / dem / des Kollegen; plural die Kollegen.",
+      "Which ones? Mostly people and animals ending in -e (der Kollege, Kunde, Junge, Experte, Löwe), nouns ending in -ent, -ant, -ist, -at (Student, Praktikant, Polizist, Soldat), plus der Mensch, der Nachbar, der Herr (Herrn, plural Herren), der Bär.",
+      "A few take -ns in the genitive: der Name → des Namens.",
+      "The genitive has just -(e)n, no -s: des Studenten."
+    ],
+    "en": "No English equivalent – it's a quirk to memorise. Tip: if a masculine noun for a person ends in -e, -ent or -ist, expect -(e)n outside the nominative.",
+    "pt": "No Portuguese equivalent either. Think of it as the noun also showing the case, like the article does: Ich frage den Kollegen = Pergunto ao colega.",
+    "examples": [
+      { "de": "Ich habe gestern einen Kollegen getroffen.", "en": "I met a colleague yesterday.", "pt": "Ontem encontrei um colega." },
+      { "de": "Kennst du den neuen Nachbarn?", "en": "Do you know the new neighbour?", "pt": "Conheces o vizinho novo?" },
+      { "de": "Das Auto gehört dem Studenten.", "en": "The car belongs to the student.", "pt": "O carro é do estudante." }
+    ]
+  },
+  "future": {
+    "rule": [
+      "Futur I = werden (position 2) + infinitive (end): Ich werde dich anrufen.",
+      "werden: ich werde, du wirst, er wird, wir werden, ihr werdet, sie werden.",
+      "Use: promises and plans (Ich werde dich nie vergessen), predictions (Morgen wird es regnen), and guesses about now with wohl / sicher / bestimmt (Er wird wohl krank sein = he's probably sick).",
+      "For the near future Germans usually use the PRESENT + a time word: Morgen fahre ich nach Bern.",
+      "werden on its own = to become: Sie wird Ärztin."
+    ],
+    "en": "werden + infinitive ≈ will + verb: Ich werde kommen = I will come. Careful: 'Ich will' means I WANT, not I will! And English 'going to' is mostly just the present in German.",
+    "pt": "Like 'vou + infinitivo' or the futuro: 'Vou ligar-te' = Ich werde dich anrufen. As in Portuguese, the present often does the job: 'Amanhã vou a Berna' = Morgen fahre ich nach Bern. 'Ele deve estar doente' = Er wird wohl krank sein.",
+    "examples": [
+      { "de": "Ich werde dich nie vergessen.", "en": "I will never forget you.", "pt": "Nunca te vou esquecer." },
+      { "de": "Morgen wird es regnen.", "en": "It's going to rain tomorrow.", "pt": "Amanhã vai chover." },
+      { "de": "Er ist nicht da. Er wird wohl krank sein.", "en": "He isn't here. He's probably sick.", "pt": "Ele não está cá. Deve estar doente." }
+    ]
+  },
+
+  "k2_present": {
+    "rule": [
+      "Konjunktiv II = unreal, imagined, hypothetical – not true now.",
+      "Most verbs: würde + infinitive at the end: Ich würde reisen.",
+      "Common verbs have their own form instead: sein → wäre, haben → hätte, können → könnte, müssen → müsste, dürfen → dürfte, wissen → wüsste, geben → es gäbe, kommen → käme, gehen → ginge. They come from the Präteritum + umlaut: hatte → hätte, war → wäre.",
+      "Unreal condition: Wenn + Konjunktiv II (verb at the end), then the main clause starts with the verb: Wenn ich Zeit hätte, würde ich reisen.",
+      "You can drop wenn and start with the verb: Hätte ich Zeit, würde ich reisen."
+    ],
+    "en": "Exactly the English second conditional: If I had time, I would travel = Wenn ich Zeit hätte, würde ich reisen. 'If I were you' = Wenn ich du wäre.",
+    "pt": "The if-clause is the Portuguese imperfeito do conjuntivo, the main clause the condicional (or imperfeito): 'Se eu tivesse tempo, viajava / viajaria' = Wenn ich Zeit hätte, würde ich reisen. hätte = tivesse · wäre = fosse / estivesse · könnte = pudesse / poderia · würde … = -ia.",
+    "examples": [
+      { "de": "Wenn ich mehr Zeit hätte, würde ich ein Instrument lernen.", "en": "If I had more time, I would learn an instrument.", "pt": "Se tivesse mais tempo, aprendia um instrumento." },
+      { "de": "Wenn ich du wäre, würde ich das nicht machen.", "en": "If I were you, I wouldn't do that.", "pt": "Se fosse a ti, não fazia isso." },
+      { "de": "Wenn es keine Handys gäbe, wäre das Leben ruhiger.", "en": "If there were no mobile phones, life would be calmer.", "pt": "Se não houvesse telemóveis, a vida seria mais calma." }
+    ]
+  },
+  "k2_past": {
+    "rule": [
+      "For unreal situations in the PAST (it didn't happen): hätte/wäre + Partizip II.",
+      "Choose hätte or wäre as in the Perfekt: verbs that take sein in the Perfekt take wäre (wäre gekommen), all others hätte (hätte gewusst).",
+      "Wenn ich das gewusst hätte, wäre ich gekommen.",
+      "With modal verbs: hätte + infinitive + modal infinitive (double infinitive at the end): Ich hätte mehr lernen sollen. Du hättest anrufen können.",
+      "Regrets: Ich hätte … sollen (I should have …)."
+    ],
+    "en": "The English third conditional: If I had known, I would have come = Wenn ich das gewusst hätte, wäre ich gekommen. 'I should have studied more' = Ich hätte mehr lernen sollen · 'You could have called' = Du hättest anrufen können.",
+    "pt": "Like 'Se eu tivesse sabido, teria vindo' (in speech often 'tinha vindo'): hätte gewusst = tivesse sabido · wäre gekommen = teria vindo. 'Devia ter estudado mais' = Ich hätte mehr lernen sollen · 'Podias ter ligado' = Du hättest anrufen können.",
+    "examples": [
+      { "de": "Wenn ich das gewusst hätte, wäre ich gekommen.", "en": "If I had known that, I would have come.", "pt": "Se eu tivesse sabido, teria vindo." },
+      { "de": "Ich hätte mehr lernen sollen.", "en": "I should have studied more.", "pt": "Devia ter estudado mais." },
+      { "de": "Du hättest mir das früher sagen können.", "en": "You could have told me that earlier.", "pt": "Podias ter-me dito isso mais cedo." }
+    ]
+  },
+  "irreal_als_ob": {
+    "rule": [
+      "Unreal wishes (you wish things were different): Wenn … doch / nur + Konjunktiv II (verb at the end), or start with the verb: Wenn ich doch nur mehr Zeit hätte! · Hätte ich doch nur mehr Zeit!",
+      "Wishes about the past (regret): Wenn ich das doch nur gewusst hätte! · Hätte ich doch nichts gesagt!",
+      "Unreal comparison: als ob / als wenn + Konjunktiv II, verb at the end: Er tut so, als ob er alles wüsste.",
+      "Short form: als + the verb directly: Er tut so, als wüsste er alles."
+    ],
+    "en": "Wishes = 'If only I had more time!' / 'If only I hadn't said anything!'. als ob = as if / as though: He acts as if he knew everything.",
+    "pt": "Wishes = 'Quem me dera ter mais tempo!' / 'Se ao menos eu tivesse mais tempo!'. als ob = como se + imperfeito do conjuntivo: 'como se soubesse tudo' = als ob er alles wüsste.",
+    "examples": [
+      { "de": "Wenn ich doch nur mehr Zeit hätte!", "en": "If only I had more time!", "pt": "Se ao menos eu tivesse mais tempo!" },
+      { "de": "Hätte ich doch nur nichts gesagt!", "en": "If only I hadn't said anything!", "pt": "Quem me dera não ter dito nada!" },
+      { "de": "Er tut so, als ob er alles wüsste.", "en": "He acts as if he knew everything.", "pt": "Ele age como se soubesse tudo." }
+    ]
+  },
+  "passive_past": {
+    "rule": [
+      "Präteritum passive: wurde + Partizip II: Das Haus wurde 1950 gebaut. (wurde, wurdest, wurde, wurden, wurdet, wurden)",
+      "Perfekt passive: sein + Partizip II + worden: Das Paket ist geliefert worden. Always sein, and 'worden' – never 'geworden'.",
+      "Plusquamperfekt passive: war + Partizip II + worden: Die Rechnung war schon bezahlt worden.",
+      "The Präteritum passive is usual in writing and for history; the Perfekt passive in speech."
+    ],
+    "en": "Like English was / has been + past participle: The house was built in 1950 = Das Haus wurde 1950 gebaut · The parcel has been delivered = Das Paket ist geliefert worden.",
+    "pt": "Like 'foi + particípio': 'A casa foi construída em 1950' = Das Haus wurde 1950 gebaut. 'worden' is just the passive marker in the Perfekt – Portuguese has no equivalent; 'geworden' (became) is a different thing.",
+    "examples": [
+      { "de": "Das Haus wurde 1950 gebaut.", "en": "The house was built in 1950.", "pt": "A casa foi construída em 1950." },
+      { "de": "Mein Fahrrad ist gestohlen worden!", "en": "My bike has been stolen!", "pt": "Roubaram-me a bicicleta!" },
+      { "de": "Die Rechnung war schon bezahlt worden.", "en": "The bill had already been paid.", "pt": "A conta já tinha sido paga." }
+    ]
+  },
+  "passive_modal": {
+    "rule": [
+      "Modal verb (position 2) + Partizip II + werden (end): Die Rechnung muss bezahlt werden.",
+      "In the past, the modal goes into the Präteritum: Das konnte nicht geklärt werden.",
+      "In a subordinate clause the modal goes to the very end: …, weil das Auto repariert werden muss.",
+      "Typical in rules and instructions: Das Formular muss unterschrieben werden. Hier darf nicht geparkt werden."
+    ],
+    "en": "Like English 'must be paid', 'can be solved': Die Rechnung muss bezahlt werden = The bill must be paid.",
+    "pt": "Like 'tem de ser paga', 'pode ser resolvido': Die Rechnung muss bezahlt werden = A conta tem de ser paga. Order: Portuguese 'tem de ser paga' → German 'muss … bezahlt werden' (the passive parts go to the end).",
+    "examples": [
+      { "de": "Die Rechnung muss bis Freitag bezahlt werden.", "en": "The bill must be paid by Friday.", "pt": "A conta tem de ser paga até sexta-feira." },
+      { "de": "Das Problem kann schnell gelöst werden.", "en": "The problem can be solved quickly.", "pt": "O problema pode ser resolvido rapidamente." },
+      { "de": "Hier darf nicht geparkt werden.", "en": "Parking is not allowed here.", "pt": "Aqui não se pode estacionar." }
+    ]
+  },
+  "relative_clauses": {
+    "rule": [
+      "The relative pronoun takes its gender and number from the noun, and its case from its job in the relative clause.",
+      "Dative: dem (m./n.), der (f.), denen (plural!) – die Kollegin, der ich helfe · die Kinder, denen ich Deutsch beibringe.",
+      "Genitive ('whose'): dessen (m./n.), deren (f. and plural) – der Mann, dessen Auto … · die Frau, deren Sohn …",
+      "With a preposition: the preposition comes first and decides the case: der Freund, mit dem ich reise · das Thema, über das wir gesprochen haben.",
+      "wo for places (die Stadt, wo ich geboren bin) · was after alles, etwas, nichts, das Beste (Das ist alles, was ich weiß)."
+    ],
+    "en": "English: to whom / whose / with whom / where / what. English often moves the preposition to the end ('the friend I travel with'); German never does: der Freund, mit dem ich reise.",
+    "pt": "Portuguese: a quem / cujo / com quem / onde / o que. 'O amigo com quem viajo' = der Freund, mit dem ich reise · 'o homem cujo carro …' = der Mann, dessen Auto … · 'tudo o que sei' = alles, was ich weiß. 'com quem' and 'mit dem' are built the same way.",
+    "examples": [
+      { "de": "Der Freund, mit dem ich in Urlaub fahre, heißt Jonas.", "en": "The friend I'm going on holiday with is called Jonas.", "pt": "O amigo com quem vou de férias chama-se Jonas." },
+      { "de": "Das ist der Mann, dessen Auto gestohlen wurde.", "en": "That's the man whose car was stolen.", "pt": "Este é o homem cujo carro foi roubado." },
+      { "de": "Das ist alles, was ich weiß.", "en": "That's all I know.", "pt": "É tudo o que sei." }
+    ]
+  },
+  "genitive": {
+    "rule": [
+      "The genitive shows possession (wessen? – whose?): das Auto des Nachbarn = the neighbour's car.",
+      "Articles: des (m./n.) + -s/-es on the noun (des Mannes, des Kindes) · der (f. and plural, no noun ending): der Frau, der Kinder · ein → eines / einer.",
+      "Adjectives in the genitive end in -en: des schlechten Wetters.",
+      "Genitive prepositions: wegen (because of), trotz (despite), während (during), innerhalb / außerhalb (within / outside), statt (instead of), aufgrund (due to).",
+      "In speech von + dative often replaces it (das Auto von meinem Bruder), but in writing and after these prepositions the genitive is expected."
+    ],
+    "en": "The genitive is English 's or 'of': the colour of the house = die Farbe des Hauses · my brother's car = das Auto meines Bruders.",
+    "pt": "Like Portuguese 'de': o carro do vizinho = das Auto des Nachbarn · a cor da casa = die Farbe des Hauses. wegen = por causa de · trotz = apesar de · während = durante · innerhalb = dentro de.",
+    "examples": [
+      { "de": "Das ist das Auto meines Bruders.", "en": "That's my brother's car.", "pt": "Este é o carro do meu irmão." },
+      { "de": "Wegen des Streiks fahren keine Züge.", "en": "Because of the strike, no trains are running.", "pt": "Por causa da greve, não há comboios." },
+      { "de": "Während der Sitzung war mein Handy aus.", "en": "During the meeting my phone was off.", "pt": "Durante a reunião, o meu telemóvel estava desligado." }
+    ]
+  },
+  "two_part_connectors": {
+    "rule": [
+      "sowohl … als auch = both … and: Ich spreche sowohl Deutsch als auch Französisch.",
+      "weder … noch = neither … nor – already negative, so no extra nicht/kein: Er trinkt weder Kaffee noch Tee.",
+      "entweder … oder = either … or · nicht nur … sondern auch = not only … but also · zwar … aber = admittedly … but.",
+      "je + comparative …, desto/umso + comparative …: the je-part is a subordinate clause (verb at the end); desto + comparative takes position 1 of the main clause (verb next): Je mehr ich übe, desto besser spreche ich."
+    ],
+    "en": "Direct equivalents: both … and · neither … nor · either … or · not only … but also · je … desto = the more … the better.",
+    "pt": "Equivalents: tanto … como · nem … nem · ou … ou · não só … mas também · é verdade que … mas · je … desto = quanto mais …, mais/melhor: 'Quanto mais pratico, melhor falo' = Je mehr ich übe, desto besser spreche ich.",
+    "examples": [
+      { "de": "Ich spreche sowohl Deutsch als auch Französisch.", "en": "I speak both German and French.", "pt": "Falo tanto alemão como francês." },
+      { "de": "Er trinkt weder Kaffee noch Tee.", "en": "He drinks neither coffee nor tea.", "pt": "Ele não bebe nem café nem chá." },
+      { "de": "Je mehr ich übe, desto besser spreche ich.", "en": "The more I practise, the better I speak.", "pt": "Quanto mais pratico, melhor falo." }
+    ]
+  },
+  "participle_adjectives": {
+    "rule": [
+      "Partizip I = infinitive + -d: weinend, lachend, fahrend. Meaning: happening right now, active (the crying child = the child that is crying).",
+      "Partizip II = gemacht, gestohlen, renoviert. Meaning: finished or passive (the stolen laptop = the laptop that was stolen).",
+      "Before a noun both take normal adjective endings: das weinende Kind, der gestohlene Laptop, mit frisch gekochtem Kaffee.",
+      "They replace a relative clause: das Kind, das weint → das weinende Kind."
+    ],
+    "en": "Exactly like English -ing and past-participle adjectives: the crying child = das weinende Kind · the stolen laptop = der gestohlene Laptop. German just adds the adjective ending.",
+    "pt": "Partizip II = the particípio passado used as an adjective: o portátil roubado = der gestohlene Laptop. Partizip I has no direct Portuguese form: 'a criança que está a chorar' = das weinende Kind (Portuguese uses a relative clause).",
+    "examples": [
+      { "de": "Das weinende Kind sucht seine Mutter.", "en": "The crying child is looking for its mother.", "pt": "A criança que está a chorar procura a mãe." },
+      { "de": "Wir haben den gestohlenen Laptop wiedergefunden.", "en": "We found the stolen laptop again.", "pt": "Encontrámos o portátil roubado." },
+      { "de": "Die steigenden Preise sind ein Problem.", "en": "The rising prices are a problem.", "pt": "Os preços a subir são um problema." }
+    ]
+  },
+  "lassen": {
+    "rule": [
+      "lassen + infinitive = to have something done by someone else: Ich lasse mein Auto reparieren.",
+      "For yourself / your body: sich (dative) etwas machen lassen: Ich lasse mir die Haare schneiden.",
+      "lassen + infinitive = to let, allow: Lass mich gehen! · Lass uns … = Let's …",
+      "lassen on its own = to leave something somewhere: Ich habe die Jacke zu Hause gelassen.",
+      "Perfekt with another verb: double infinitive: Ich habe das Auto reparieren lassen (not 'gelassen').",
+      "Forms: ich lasse, du lässt, er lässt · Präteritum ließ."
+    ],
+    "en": "Covers English 'have something done' (I'm having my car repaired), 'let' (let me go, let's go) and 'leave' (I left my jacket at home).",
+    "pt": "Covers 'mandar fazer' (Vou mandar arranjar o carro = Ich lasse das Auto reparieren), 'deixar' (Deixa-me ir = Lass mich gehen · Deixei o casaco em casa = Ich habe die Jacke zu Hause gelassen) and 'vamos …' (Lass uns gehen = Vamos).",
+    "examples": [
+      { "de": "Ich lasse mir morgen die Haare schneiden.", "en": "I'm getting my hair cut tomorrow.", "pt": "Amanhã vou cortar o cabelo." },
+      { "de": "Ich habe mein Handy zu Hause gelassen.", "en": "I left my phone at home.", "pt": "Deixei o telemóvel em casa." },
+      { "de": "Lass uns ins Kino gehen!", "en": "Let's go to the cinema!", "pt": "Vamos ao cinema!" }
+    ]
+  }
+}

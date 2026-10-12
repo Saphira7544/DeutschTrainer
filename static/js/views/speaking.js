@@ -3,7 +3,7 @@ import { db } from "../db.js";
 import { wordDiff } from "../lib/text.js";
 import { addCards } from "../srs.js";
 import { addActivity, getSettings, setSetting } from "../store.js";
-import { h, loadJSON, mount, shuffle, speakButton, spinner, toast } from "../ui.js";
+import { germanWord, h, loadJSON, mount, shuffle, speakButton, spinner, toast } from "../ui.js";
 
 const MAX_SECONDS = 120;
 
@@ -259,7 +259,7 @@ export async function render(root) {
                   btn.replaceWith(h("span.muted.small", added ? "✓ added" : "already in your words"));
                 },
               }, "+ Add");
-              return h("div.new-word", h("span", h("strong", { lang: "de" }, w.de), " – ", w.en), btn);
+              return h("div.new-word", h("span", h("strong", { lang: "de" }, germanWord(w.de)), " – ", w.en), btn);
             }),
           ),
 

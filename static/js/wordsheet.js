@@ -3,7 +3,7 @@
 import { post } from "./api.js";
 import { buildLexicon, tokenize } from "./lib/lexicon.js";
 import { addCards, findCard, isPriority, prioritize, State } from "./srs.js";
-import { h, loadJSON, mount, speakButton, spinner } from "./ui.js";
+import { germanWord, h, loadJSON, mount, speakButton, spinner } from "./ui.js";
 
 let lexiconPromise;
 /** The Goethe word list as a dictionary (offline). Empty if the deck file isn't there. */
@@ -91,7 +91,7 @@ function entryBlock(entry, source) {
   const status = h("div.entry-status", spinner(""));
   showStatus(entry, source, status);
   return h("div.entry",
-    h("p.entry-de", { lang: "de" }, entry.de, " ", speakButton(entry.de, entry.audio)),
+    h("p.entry-de", { lang: "de" }, germanWord(entry.de), " ", speakButton(entry.de, entry.audio)),
     entry.plural && h("p.muted.small", { lang: "de" }, `Plural: die ${entry.plural}`),
     h("p.entry-en", entry.en),
     entry.enNote && h("p.muted.small", entry.enNote),
