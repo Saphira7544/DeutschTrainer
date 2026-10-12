@@ -4,7 +4,7 @@ import { post } from "../api.js";
 import { db } from "../db.js";
 import { checkAnswer } from "../lib/text.js";
 import { addActivity, getSettings, setSetting } from "../store.js";
-import { h, loadJSON, mount, shuffle, speakButton, spinner, toast } from "../ui.js";
+import { h, loadJSON, mount, openSheet, shuffle, speakButton, spinner, toast } from "../ui.js";
 import { tappable } from "../wordsheet.js";
 
 const SESSION_SIZE = 10;
@@ -21,11 +21,16 @@ async function loadTopics() {
 const bankCache = {};
 /** Exercises of one level, keyed by topic, in the app's format. */
 async function loadBank(level) {
-  bankCache[level] ??= loadJSON(`/data/grammar/${level}.json`).then((raw) =>
+  bankCache[level] ??= Promise.all([
+    loadJSON(`/data/grammar/${level}.json`),
+    loadJSON(`/data/grammar/${level}.tr.json`).catch(() => ({})), // English + Portuguese of each answer
+  ]).then(([raw, translations]) =>
     Object.fromEntries(
       Object.entries(raw).map(([topicId, items]) => [
         topicId,
         items.map((ex, i) => ({
+          en: translations[topicId]?.[i]?.[0] ?? null,
+          pt: translations[topicId]?.[i]?.[1] ?? null,
           id: `${topicId}#${i}`,
           topic_id: topicId,
           type: { c: "choice", g: "gap", r: "transform" }[ex.t],
@@ -40,6 +45,45 @@ async function loadBank(level) {
     ),
   );
   return bankCache[level];
+}
+
+let rulesCache;
+function loadRules() {
+  rulesCache ??= loadJSON("/data/grammar_rules.json");
+  return rulesCache;
+}
+
+/** The grammar rule of a topic, with English and Portuguese comparisons and translated examples. */
+async function showRule(topic) {
+  const body = h("div.sheet-body", spinner());
+  openSheet(`📖 ${topic.level}`, body, `Rule: ${topic.title}`);
+  const rule = (await loadRules())[topic.id];
+  if (!rule) return mount(body, h("p.muted", "No explanation for this topic yet."));
+  mount(body,
+    h("h2", topic.title),
+    h("p.muted", topic.summary),
+    h("h4", "The rule"),
+    h("ul.rule-list", rule.rule.map((r) => h("li", r))),
+    h("h4", "🇬🇧 Compared with English"),
+    h("p", rule.en),
+    h("h4", "🇵🇹 Comparado com o português"),
+    h("p", rule.pt),
+    h("h4", "Examples"),
+    rule.examples.map((ex) =>
+      h("div.rule-example",
+        h("p.de", { lang: "de" }, tappable(ex.de), " ", speakButton(ex.de)),
+        translations(ex),
+      ),
+    ),
+  );
+}
+
+function translations(ex) {
+  if (!ex.en && !ex.pt) return null;
+  return h("div.translations",
+    ex.en && h("p", { lang: "en" }, h("span.flag", "🇬🇧"), ex.en),
+    ex.pt && h("p", { lang: "pt-PT" }, h("span.flag", "🇵🇹"), ex.pt),
+  );
 }
 
 async function topicRecord(id) {
@@ -120,7 +164,12 @@ async function topicList(root) {
     const pct = r?.attempts ? Math.round((r.correct / r.attempts) * 100) : null;
     return h("a.topic", { href: `#/grammar/${t.id}` },
       h("div",
-        h("strong", t.title),
+        h("strong", t.title, " ", h("button.icon-btn.rule-btn", {
+          type: "button",
+          title: "Read the rule",
+          "aria-label": `Read the rule: ${t.title}`,
+          onclick: (e) => (e.preventDefault(), e.stopPropagation(), showRule(t)),
+        }, "📖")),
         h("p.muted", t.summary),
         h("div.progress.thin", h("div.bar", { style: { width: `${Math.min(100, (seen / Math.max(1, total)) * 100)}%` } })),
       ),
@@ -187,8 +236,11 @@ async function practice(root, topicId) {
       h("span.muted", `${index + 1}/${plan.length}`),
     );
     const body = h("div.card.exercise",
-      h("span.badge", `${topic?.level ?? ""} · ${topic?.title ?? ex.topic_id}`),
-      ex.ai && h("span.badge.new", "✨ AI"),
+      h("div.exercise-head",
+        h("span.badge", `${topic?.level ?? ""} · ${topic?.title ?? ex.topic_id}`),
+        ex.ai && h("span.badge.new", "✨ AI"),
+        topic && h("button.btn.small.rule-open", { type: "button", onclick: () => showRule(topic) }, "📖 Rule"),
+      ),
       h("p.instruction", ex.instruction),
       h("p.exercise-sentence", { lang: "de" }, ex.type === "transform" ? tappable(ex.sentence) : renderGap(ex.sentence)),
       ex.hint && h("p.hint", ex.hint),
@@ -262,8 +314,9 @@ async function practice(root, topicId) {
         verdict.note && h("p.muted", verdict.note),
         !ok && h("p.muted.small", { lang: "de" }, "You wrote: ", answer),
         h("p.full-sentence", { lang: "de" }, tappable(full), " ", speakButton(full)),
+        translations(ex),
         ex.answers.length > 1 && h("p.muted.small", { lang: "de" }, "Also correct: ", ex.answers.filter((a) => a !== verdict.expected).join(" · ")),
-        h("p.explanation", ex.explanation),
+        h("p.explanation", ex.explanation, " ", topic && h("button.link.small", { type: "button", onclick: () => showRule(topic) }, "📖 See the rule")),
         extra,
         h("div.row", overrideBtn, askBtn, h("button.btn.primary", { type: "button", onclick: () => (index++, next()) }, "Next")),
       );

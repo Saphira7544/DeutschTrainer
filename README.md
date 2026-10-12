@@ -6,6 +6,8 @@ A phone-first study app for getting from "I know the rules" to "I can just say i
 
 - **Words**: the Goethe A1–B1 word list (2,859 words with native audio, examples, plurals, conjugations), one tap to add. You can also import other Anki text exports or add words by hand. Reviews use FSRS, the scheduler modern Anki uses. You type the German from the English, because producing words is what makes them stick. Missing or wrong articles count as "almost".
 - **Grammar**: 42 topics from A1.2 to B1.2 with **806 built-in exercises** (multiple choice, fill-in-the-gap, rewrite the sentence). Practice works offline and costs nothing. Unseen exercises come first, then the ones you got wrong. Mixed practice serves more of your weak topics, filtered by the levels you pick. The AI is used only when you ask: *Is mine right too?* for an answer that differs from the key, or *Make 8 new ones* once a topic's bank is used up.
+- **📖 Rules**: every grammar topic has an explicit explanation, a comparison with English and with European Portuguese, and examples translated into both. Open it from the topic list or from any exercise. After each answer, the correct sentence is shown in 🇬🇧 English and 🇵🇹 Portuguese.
+- **Gender colours** like the Goethe deck: **der** blue, **die** red, **das** green.
 - **Tap any word** in a grammar exercise to see its meaning from the Goethe list. Inflected forms are recognised (fährt → fahren, Kollegen → der Kollege, hätte → haben). One tap adds it to your words, and it comes **first in your next review**, outside the daily new-word limit. Words not on the list: *🤖 Look it up* (AI) or type the meaning yourself.
 - **Speak**: answer a question out loud (or type). The AI first restates what you meant, shows the minimal correction as a diff, gives a more natural local version, and picks **at most 3** fixes that matter. Then *Say it again*. Fixes go to the **Notebook** and steer your grammar exercises, and new words can become cards with one tap.
 - **Reminders** (More → Reminders), at your chosen times (default 08:30, 13:00, 20:30):
@@ -69,9 +71,11 @@ app/
 static/
   index.html, sw.js, manifest.webmanifest, css/, icons/
   data/grammar_topics.json     the 42 grammar topics and their levels
+  data/grammar_rules.json      the rule, EN/PT comparison and translated examples per topic
   data/grammar/<level>.json    the exercise bank. Compact format: t = type (c choice / g gap / r rewrite),
                                s = sentence (___ marks the gap), o = options, a = answer(s), h = hint,
                                i = instruction, e = explanation. tests/test_grammar_bank.py validates it.
+  data/grammar/<level>.tr.json [English, Portuguese] translation of each exercise's answer, same order
   data/speaking_prompts.json   built-in speaking questions
   data/goethe_deck.json        word list built by tools/import_apkg.py (not in git)
   audio/goethe/                native recordings for the word list (not in git)

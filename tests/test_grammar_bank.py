@@ -53,3 +53,24 @@ def test_no_duplicate_sentences_in_a_topic():
         for topic_id, items in load_level(level).items():
             sentences = [(ex.get("i"), ex["s"]) for ex in items]
             assert len(sentences) == len(set(sentences)), topic_id
+
+
+def test_every_exercise_has_english_and_portuguese_translations():
+    for level in LEVELS:
+        bank = load_level(level)
+        translations = json.loads((BANK_DIR / f"{level}.tr.json").read_text(encoding="utf-8"))
+        assert set(translations) == set(bank), level
+        for topic_id, items in bank.items():
+            assert len(translations[topic_id]) == len(items), topic_id
+            for en, pt in translations[topic_id]:
+                assert en.strip() and pt.strip(), topic_id
+
+
+def test_every_topic_has_a_rule_with_translated_examples():
+    rules = json.loads((config.DATA_DIR / "grammar_rules.json").read_text(encoding="utf-8"))
+    assert set(rules) == set(prompts.grammar_topics())
+    for topic_id, rule in rules.items():
+        assert len(rule["rule"]) >= 3 and rule["en"] and rule["pt"], topic_id
+        assert len(rule["examples"]) >= 3, topic_id
+        for ex in rule["examples"]:
+            assert ex["de"] and ex["en"] and ex["pt"], topic_id

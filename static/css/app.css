@@ -254,6 +254,17 @@ label.check { display: flex; align-items: center; font-weight: 400; }
 }
 .chip.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .instruction { color: var(--muted); font-size: 0.95rem; }
+.exercise-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.exercise-head .badge { margin: 0; }
+.rule-open { margin-left: auto; min-height: 32px; }
+.rule-btn { font-size: 0.95rem; }
+.translations { margin: 6px 0; padding: 8px 10px; border-radius: 10px; background: rgb(127 127 127 / 10%); }
+.translations p { margin: 2px 0; font-size: 0.95rem; }
+.flag { display: inline-block; width: 1.6em; }
+.rule-list { padding-left: 18px; margin: 4px 0; }
+.rule-list li { margin: 6px 0; }
+.rule-example { border-top: 1px solid var(--border); padding: 8px 0; }
+.rule-example .de { font-weight: 700; margin: 0 0 4px; }
 .exercise-sentence { font-size: 1.3rem; font-weight: 600; line-height: 1.5; margin: 10px 0; }
 .gap { display: inline-block; min-width: 70px; border-bottom: 3px solid var(--accent); margin: 0 4px; }
 .hint { color: var(--muted); font-style: italic; }

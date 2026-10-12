@@ -4,7 +4,7 @@ import { computeStreak, dayKey } from "/js/lib/days.js";
 import { nagFor } from "/js/lib/nag.js";
 
 // Bump the version when the file list changes. The Goethe deck and its audio are cached when first used.
-const CACHE = "deutsch-trainer-v4";
+const CACHE = "deutsch-trainer-v5";
 
 const SHELL = [
   "/",
@@ -37,6 +37,12 @@ const SHELL = [
   "/data/grammar/A2.2.json",
   "/data/grammar/B1.1.json",
   "/data/grammar/B1.2.json",
+  "/data/grammar/A1.2.tr.json",
+  "/data/grammar/A2.1.tr.json",
+  "/data/grammar/A2.2.tr.json",
+  "/data/grammar/B1.1.tr.json",
+  "/data/grammar/B1.2.tr.json",
+  "/data/grammar_rules.json",
   "/manifest.webmanifest",
   "/icons/icon-192.png",
   "/icons/icon-512.png",

@@ -41,6 +41,30 @@ export function toast(message, kind = "info") {
   toastTimer = setTimeout(() => (el.className = "toast"), kind === "error" ? 5000 : 2500);
 }
 
+// ---------------------------------------------------------------- bottom sheet
+
+let sheet = null;
+function onSheetKey(e) {
+  if (e.key === "Escape") closeSheet();
+}
+export function closeSheet() {
+  sheet?.remove();
+  sheet = null;
+  document.removeEventListener("keydown", onSheetKey);
+}
+/** A panel that slides up from the bottom (tap outside, ✕ or Esc closes it). Only one is open at a time. */
+export function openSheet(heading, body, label = heading) {
+  closeSheet();
+  sheet = h("div.sheet-backdrop", { onclick: (e) => e.target === sheet && closeSheet() },
+    h("div.sheet", { role: "dialog", "aria-label": label },
+      h("div.sheet-head", h("span.muted", heading), h("button.icon-btn", { type: "button", "aria-label": "Close", onclick: closeSheet }, "✕")),
+      body,
+    ),
+  );
+  document.body.append(sheet);
+  document.addEventListener("keydown", onSheetKey);
+}
+
 export function spinner(label = "Loading…") {
   return h("div.loading", h("div.spinner"), h("span", label));
 }

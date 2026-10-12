@@ -3,7 +3,7 @@
 import { post } from "./api.js";
 import { buildLexicon, tokenize } from "./lib/lexicon.js";
 import { addCards, findCard, isPriority, prioritize, State } from "./srs.js";
-import { germanWord, h, loadJSON, mount, speakButton, spinner } from "./ui.js";
+import { germanWord, h, loadJSON, mount, openSheet, speakButton, spinner } from "./ui.js";
 
 let lexiconPromise;
 /** The Goethe word list as a dictionary (offline). Empty if the deck file isn't there. */
@@ -21,27 +21,9 @@ export function tappable(text, sentence = text) {
   );
 }
 
-let current = null;
-function close() {
-  current?.remove();
-  current = null;
-  document.removeEventListener("keydown", onKey);
-}
-function onKey(e) {
-  if (e.key === "Escape") close();
-}
-
 export async function openWord(word, sentence) {
-  close();
   const body = h("div.sheet-body", spinner("Looking it up…"));
-  current = h("div.sheet-backdrop", { onclick: (e) => e.target === current && close() },
-    h("div.sheet", { role: "dialog", "aria-label": `Meaning of ${word}` },
-      h("div.sheet-head", h("span.muted", `“${word}”`), h("button.icon-btn", { type: "button", "aria-label": "Close", onclick: close }, "✕")),
-      body,
-    ),
-  );
-  document.body.append(current);
-  document.addEventListener("keydown", onKey);
+  openSheet(`“${word}”`, body, `Meaning of ${word}`);
 
   const entries = (await lexicon()).lookup(word);
   if (entries.length) {
